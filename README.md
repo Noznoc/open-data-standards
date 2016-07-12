@@ -17,9 +17,9 @@ All code in the index.html is commented. Documentation regarding the visualizati
 Installation
 ------------
 
-As this project is still in its early steps, there is no website URL to access the visualization; rather, if you download the entire file onto your Desktop and then run the python -m SimpleHTTPServer (http://www.linuxjournal.com/content/tech-tip-really-simple-http-server-python), the visualization can be accessed and used. 
+Either interact with the (unfinished) product here: http://test.geothink.ca/visualization/, or you can download the entire file onto your Desktop and then run the python -m SimpleHTTPServer (http://www.linuxjournal.com/content/tech-tip-really-simple-http-server-python). 
 
 Contact
 --------
 
-Please email julia.conzon@mail.mcgill.ca if you have any questions or comments regarding the code. As this visualization is still incomplete, any feedback would be great. 
+As this visualization is still incomplete, any feedback would be great. Please email julia.conzon@mail.mcgill.ca if you have any questions or comments regarding the code or you can submit feedback directly on the test webpage (http://test.geothink.ca/visualization/).  
