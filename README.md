@@ -17,9 +17,9 @@ All code in the index.html is commented. Documentation regarding the visualizati
 Installation
 ------------
 
-Either interact with the (unfinished) product here: http://test.geothink.ca/visualization/, or you can download the entire file onto your Desktop and then run the python -m SimpleHTTPServer (http://www.linuxjournal.com/content/tech-tip-really-simple-http-server-python). 
+Either interact with the (unfinished) product here: http://geothink.ca/opendatastandards/, or you can download the entire file onto your Desktop and then run the python -m SimpleHTTPServer (http://www.linuxjournal.com/content/tech-tip-really-simple-http-server-python). 
 
 Contact
 --------
 
-As this visualization is still incomplete, any feedback would be great. Please email julia.conzon@mail.mcgill.ca if you have any questions or comments regarding the code or you can submit feedback directly on the test webpage (http://test.geothink.ca/visualization/).  
+As this visualization is still incomplete, any feedback would be great. Please email julia.conzon@mail.mcgill.ca if you have any questions or comments regarding the code or you can submit feedback directly on the test webpage (http://geothink.ca/opendatastandards/).  
