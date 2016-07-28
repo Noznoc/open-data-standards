@@ -688,234 +688,225 @@
 				
 				//The following fielFormats function is extremely long/messy because it breaks up portions of a long string from the "Structuration" row in the 'Adoption of OD Standards by Cities' Fusion Table into separate variables
 				function fileFormats (userCity, userDomain, file, structure) { // This function creates an array of .svg images that show different file formats for each dataset (from the "Fil Format(s)" rows). Also included are description bubbles for each image that explains the structuration of the file type (under the "Structuration" rows)
-					var store = []; // An empty array where the individual images will be stored for each dataset
 					
-					// .search finds the index # of the first instance of each file type name
-					var index0 = structure.search("CSV");
-					var index1 = structure.search("XLS");
-					var index2 = structure.search("XLSX");
-					var index3 = structure.search("RSS");
-					var index4 = structure.search("RDF");
-					var index5 = structure.search("XML");
-					var index6 = structure.search("PDF");
-					var index7 = structure.search("JSON");
-					var index8 = structure.search("SODA API");
-					var index9 = structure.search("OData");
-					var index10 = structure.search("KML");
-					var index12 = structure.search("SHP");
-					var index13 = structure.search("ArcGIS Rest API");
-					var index14 = structure.search("DWG");
-					var index15 = structure.search("GDB");
-					var index16 = structure.search("SHP");
-					var index17 = structure.search("GeoJSON");
-					var index18 = structure.search("KMZ");
-					var index19 = structure.search("ATOM");
-					var index20 = structure.search("TXT");
-					var index21 = structure.search("GeoRSS");
-						
+					var store = []; // An empty array where the individual images will be stored for each dataset
+					var json; 
+					var xml;
+					var pdf;
+					var rss;
+					var csv;
+					var rdf;
+					var soda;
+					var xls;
+					var xlsx;
+					var kml;
+					var arcgis;
+					var dwg;
+					var geojson;
+					var atom;
+					var txt;
+					var georss;
+					var na;
+					var odata;
+					var shp;
+					var gdb;
+					var kmz;
+					var structureSplit;
+					
 					// This creates images for each file type and provides a popup that shows what is inside the "Structuration" row 
-					var json = "<a class ='fileStructuration' data-toggle='tooltip' title='JSON: " + structure + "' style='color: black'><img src='images/JSON.svg' width='60' height='70'></a>";
-					var xml = "<a class ='fileStructuration' data-toggle='tooltip'  title='XML: " + structure + "' style='color: black'><img src='images/XML.svg' width='60' height='70'></a>";
-					var pdf = "<a class ='fileStructuration' data-toggle='tooltip' title='PDF: " + structure + "' style='color: black'><img src='images/PDF.svg' width='60' height='70'></a>";
-					var rss = "<a class ='fileStructuration' data-toggle='tooltip' title='RSS: " + structure + "' style='color: black'><img src='images/RSS.svg' width='60' height='70'></a>";
-					var csv = "<a class ='fileStructuration' data-toggle='tooltip' title='CSV: " + structure + "' style='color: black'><img src='images/CSV.svg' width='60' height='70'></a>";
-					var rdf = "<a class ='fileStructuration' data-toggle='tooltip' title='RDF: " + structure + "' style='color: black'><img src='images/RDF.svg' width='60' height='70'></a>";
-					var soda = "<a class ='fileStructuration' data-toggle='tooltip' title='SODA API: " + structure + "' style='color: black'><img src='images/SODA_API.svg' width='60' height='70'></a>";
-					var xls = "<a class ='fileStructuration' data-toggle='tooltip' title='XLS: " + structure + "' style='color: black'><img src='images/XLS.svg' width='60' height='70'></a>";
-					var xlsx = "<a class ='fileStructuration' data-toggle='tooltip' title='XLSX: " + structure + "' style='color: black'><img src='images/XLSX.svg' width='60' height='70'></a>";
-					var kml = "<a class ='fileStructuration' data-toggle='tooltip' title='KML: " + structure + "' style='color: black'><img src='images/KML.svg' width='60' height='70'></a>";
-					var arcgis = "<a class ='fileStructuration' data-toggle='tooltip' title='ArcGIS Rest API: " + structure + "' style='color: black'><img src='images/ArcGIS.svg' width='60' height='70'></a>";
-					var dwg = "<a class ='fileStructuration' data-toggle='tooltip' title='DWG: " + structure + "' style='color: black'><img src='images/DWG.svg' width='60' height='70'></a>";
-					var geojson = "<a class ='fileStructuration' data-toggle='tooltip' title='GeoJSONL " + structure + "' style='color: black'><img src='images/GeoJSON.svg' width='60' height='70'></a>";
-					var atom = "<a class ='fileStructuration' data-toggle='tooltip' title='ATOM: " + structure + "' style='color: black'><img src='images/ATOM.svg' width='60' height='70'></a>";
-					var txt = "<a class ='fileStructuration' data-toggle='tooltip' title='TXT: " + structure + "' style='color: black'><img src='images/TXT.svg' width='60' height='70'></a>";
-					var georss = "<a class ='fileStructuration' data-toggle='tooltip' title='GeoRSS: " + structure + "' style='color: black'><img src='images/GeoRSS.svg' width='60' height='70'></a>";
-					var na = "N/A";
-					var odata = "<a class ='fileStructuration' data-toggle='tooltip' title='OData: " + structure + "' style='color: black'><img src='images/OData.svg' width='60' height='70'></a>";
-					var shp = "<a class ='fileStructuration' data-toggle='tooltip' title='SHP: " + structure + "' style='color: black'><img src='images/SHP.svg' width='60' height='70'></a>";
-					var gdb = "<a class ='fileStructuration' data-toggle='tooltip' title='GDB: " + structure + "' style='color: black'><img src='images/GDB.svg' width='60' height='70'></a>";
-					var kmz = "<a class ='fileStructuration' data-toggle='tooltip' title='KMZ: " + structure + "' style='color: black'><img src='images/KMZ.svg' width='60' height='70'></a>";
-				
-					// However, some "Structuration" cells have more than one file format, so this needs to be accounted for 
-				
-					// ADD CITY then you must account for the structuration.
-						
-					// Edmonton has the same file formats for all domains except Zoning
-					if ((userCity.indexOf("Edmonton") >= 0) && userDomain !=="Zoning"){
-						xml = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index5, index6) + "' style='color: black'><img src='images/XML.svg' width='60' height='70'></a>";
-						pdf = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index6, index7) + "' style='color: black'><img src='images/PDF.svg' width='60' height='70'></a>";
-						rss = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index3, index4) + "' style='color: black'><img src='images/RSS.svg' width='60' height='70'></a>";
-						json = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index7, index8) + "' style='color: black'><img src='images/JSON.svg' width='60' height='70'></a>";
-						csv = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index0, index1) + "' style='color: black'><img src='images/CSV.svg' width='60' height='70'></a>";
-						rdf = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index4, index5) + "' style='color: black'><img src='images/RDF.svg' width='60' height='70'></a>";
-						soda = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index8, index9) + "' style='color: black'><img src='images/SODA_API.svg' width='60' height='70'></a>";
-						odata = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index9, structure.length) + "' style='color: black'><img src='images/OData.svg' width='60' height='70'></a>";
-						xls = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index1, index2) + "' style='color: black'><img src='images/XLS.svg' width='60' height='70'></a>";
-						xlsx = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index2, index3) + "' style='color: black'><img src='images/XLSX.svg' width='60' height='70'></a>";
-					}
-						
-					// When a user selects the Public Facilities domain and The City of Surrey
-					if (userDomain == "Public Facilities" && (userCity.indexOf("Surrey") >= 0)){
-						csv = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index0, index7) + "' style='color: black'><img src='images/CSV.svg' width='60' height='70'></a>";
-						json = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index7, index10) + "' style='color: black'><img src='images/JSON.svg' width='60' height='70'></a>";
-						kml = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index10, index13) + "' style='color: black'><img src='images/KML.svg' width='60' height='70'></a>";
-						arcgis = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index13, structure.length) + "' style='color: black'><img src='images/ArcGIS.svg' width='60' height='70'></a>";
-						dwg = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index14, index16) + "' style='color: black'><img src='images/DWG.svg' width='60' height='70'></a>";
-					}
-					// When a user selects the Public Facilities domain and the City of Ottawa 
-					if (userDomain == "Public Facilities" && (userCity.indexOf("Ottawa") >= 0)){
-						dwg = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index14, index16) + "' style='color: black'><img src='images/DWG.svg' width='60' height='70'></a>";
-						shp = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index16, index0) + "' style='color: black'><img src='images/SHP.svg' width='60' height='70'></a>";
-						csv = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index0, index5) + "' style='color: black'><img src='images/CSV.svg' width='60' height='70'></a>";
-						xml = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index5, index18) + "' style='color: black'><img src='images/XML.svg' width='60' height='70'></a>";
-						kmz = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index18, index17) + "' style='color: black'><img src='images/KMZ.svg' width='60' height='70'></a>";
-						geojson = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index17, structure.length) + "' style='color: black'><img src='images/GeoJSON.svg' width='60' height='70'></a>";
-					}
-					// When a user selects the Road Construction domain and the City of Toronto 
-					if (userDomain == "Road Construction" && (userCity.indexOf("Toronto") >= 0)){
-						xml = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index5, index0) + "' style='color: black'><img src='images/XML.svg' width='60' height='70'></a>";
-						csv = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index0, structure.length) + "' style='color: black'><img src='images/CSV.svg' width='60' height='70'></a>";
-					}
-					// When a user selects the Road Construction domain and the City of Surrey
-					if (userDomain == "Road Construction" && (userCity.indexOf("Surrey") >= 0)){
-						json = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index7, index5) + "' style='color: black'><img src='images/JSON.svg' width='60' height='70'></a>";
-						xml = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index5, structure.length) + "' style='color: black'><img src='images/XML.svg' width='60' height='70'></a>";
-					}
-					// When a user selects the Service Requests domain and the City of Surrey
-					if (userDomain == "Service Requests" && userCity == "City of Surrey"){
-						xml = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index5, index7) + "' style='color: black'><img src='images/XML.svg' width='60' height='70'></a>";
-						json = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index7, structure.length) + "' style='color: black'><img src='images/JSON.svg' width='60' height='70'></a>";
-					}
-					// When a user selects the Zoning domain and the City of Edmonton 
-					if (userDomain == "Zoning" && (userCity.indexOf("Edmonton") >= 0)) {
-						kml = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index10, index18) + "' style='color: black'><img src='images/KML.svg' width='60' height='70'></a>";
-						kmz = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index18, index16) + "' style='color: black'><img src='images/KMZ.svg' width='60' height='70'></a>";
-						shp = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index16, index0) + "' style='color: black'><img src='images/SHP.svg' width='60' height='70'></a>";
-						csv = "<a class ='fileStructuration' data-toggle='tooltip' title='CSV' style='color: black'><img src='images/CSV.svg' width='60' height='70'></a>";
-						json = "<a class ='fileStructuration' data-toggle='tooltip' title='JSON' style='color: black'><img src='images/JSON.svg' width='60' height='70'></a>";
-					}
-					// When a user selects the Zoning domain and the City of Surrey 
-					if (userDomain == "Zoning" && (userCity.indexOf("Surrey") >= 0)) {
-						json = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index7, index10) + "' style='color: black'><img src='images/JSON.svg' width='60' height='70'></a>";
-						kml = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index10, index15) + "' style='color: black'><img src='images/KML.svg' width='60' height='70'></a>";
-						gdb = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index15, index14) + "' style='color: black'><img src='images/GDB.svg' width='60' height='70'></a>";
-						dwg = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index14, index13) + "' style='color: black'><img src='images/DWG.svg' width='60' height='70'></a>";
-						arcgis = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index13, structure.length) + "' style='color: black'><img src='images/ArcGIS.svg' width='60' height='70'></a>";
-					}
-					// When a user selects the Zoning domain and the City of Vancouver 
-					if (userDomain == "Zoning" && (userCity.indexOf("Vancouver") >= 0)) {
-						dwg = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index14, index16) + "' style='background-color: black;'><img src='images/DWG.svg' width='60' height='70'></a>";
-						shp = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index16, index18) + "' style='background-color: black;'><img src='images/SHP.svg' width='60' height='70'></a>";
-						kmz = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure.substring(index18, structure.length) + "' style='color: black'><img src='images/KMZ.svg' width='60' height='70'></a>";
-					}
-											
-					if (file.indexOf('XML') >= 0){ // If XML is in a file format in the "File Format(s)" row
-						if (userDomain == "Real-Time Transit" && userCity == "City of Toronto"){
-							xml = "<a class ='fileStructuration' data-toggle='tooltip' title='Dynamic: XML live feed and RESTful web service organized into requests. Organized into configuration requests, prediction requests, vehicle location request, and an arrival/departure times request. Data accessed through URL with parameters specified in query string' style='color: black'><img src='images/XML.svg' width='60' height='70'></a>";
-							csv = "<a class ='fileStructuration' data-toggle='tooltip' title='Static: Zip file – CSVs saved as text files – comma delimited. Refer to documentation on GTFS for more information' style='color: black'><img src='images/CSV.svg' width='60' height='70'></a>";
-							store.push(xml, csv); // Push these file type variables into the store array 
-						} else if (userDomain == "Real-Time Transit" && userCity == "City of Ottawa"){
-							xml = "<a class ='fileStructuration' data-toggle='tooltip' title='Dynamic: XML feed that follows the REST protocol. Hierarchical tree of tags with transit schedule information' style='color: black'><img src='images/XML.svg' width='60' height='70'></a>";
-							txt = "<a class ='fileStructuration' data-toggle='tooltip' title='Static: Zip File containing TXT files of calendar_dates.txt, calendar.txt, agency.txt, routes.txt, stops.txt, trip.txt. TXT files with data organized by comma separated values (CSV)' style='color: black'><img src='images/TXT.svg' width='60' height='70'></a>";
-							store.push(xml, txt);
-						} else if (userDomain == "Building Permits" && userCity == "City of Toronto"){
-							xml = "<a class ='fileStructuration' data-toggle='tooltip' title='Cleared Permits: Markup language with hierarchical tags. Tags organized under row in table. Active Permits: Markup language with hierarchical tags. Tags organized under row in table' style='color: black'><img src='images/XML.svg' width='60' height='70'></a>";
-							csv = "<a class ='fileStructuration' data-toggle='tooltip' title='Cleared Permits: CSV is arranged by tuples. Permit_Num is the unique identifier for each row. Has GEO_ID for uniquely identifying property address for each row. Active Permits: CSV arranged by tuples. Permit_Num is the unique identifier for each row.  Permit_Num is the unique identifier for each row. Has GEO_ID for uniquely identifying property address for each row' style='color: black'><img src='images/CSV.svg' width='60' height='70'></a>";
-							store.push(xml, csv);
-						} else {
-							store.push(xml);
+
+					var fileArray = file.split(',') // This creates the structure string into an array 				
+
+					if (fileArray.length > 1) { // If there is more than one file format for the dataset in the "File Format(s)" row of the ""Adoption of OD Standards by Cities" spreadsheet
+						structureSplit = structure.split('. '); // Separate the structuration cells by each sentence (each file description)
+						for (var i = 0; i < structureSplit.length; i++)	{ // For each file description (structuration)
+							createFiles(i) // Create a new file icon 
 						}
 					}
-					if (file.indexOf('XLS') >= 0){
-						if (userDomain == "Public Facilities" && userCity == "City of Toronto") {
-							xls = "<a class ='fileStructuration' data-toggle='tooltip' title='Wellbeing Education: XLS - 3 sheets. Normalized database consisting of tuples – unique identifier for each row is neighborhood, neighborhood ID' style='color: black'><img src='images/XLS.svg' width='60' height='70'></a>";
-							shp = "<a class ='fileStructuration' data-toggle='tooltip' title='School Locations: ESRI Shapefile. Has attribute table' style='color: black'><img src='images/SHP.svg' width='60' height='70'></a>";
-							store.push(xls, shp);
-						} else {
-							store.push(xls);
-						}
-					}
-					if (file.indexOf('ATOM') >= 0){
-						if (userDomain == "Road Construction" && userCity == "City of Vancouver"){
-							atom = "<a class ='fileStructuration' data-toggle='tooltip' title='Dynamic: ATOM structured as extended versions  of XML with specified tags. Hosted over HTTP' style='color: black'><img src='images/ATOM.svg' width='60' height='70'></a>";
-							georss = "<a class ='fileStructuration' data-toggle='tooltip' title='Dynamic: GeoRSS structured as extended versions  of XML with specified tags. Hosted over HTTP' style='color: black'><img src='images/GeoRSS.svg' width='60' height='70'></a>";
-							dwg = "<a class ='fileStructuration' data-toggle='tooltip' title='Static: DWG attribute information stored in attribute tables' style='color: black'><img src='images/DWG.svg' width='60' height='70'></a>";
-							kml = "<a class ='fileStructuration' data-toggle='tooltip' title='Static: KML is structured as a mark up language with geographic information tags. Contains geometry and spatial information' style='color: black'><img src='images/KML.svg' width='60' height='70'></a>";
-							shp = "<a class ='fileStructuration' data-toggle='tooltip' title='Static: Shapefile attribute information stored in attribute tables' style='color: black'><img src='images/SHP.svg' width='60' height='70'></a>";
-							store.push(atom, georss, dwg, kml, shp)
-						} else {
-							store.push(atom);
-						}
-					}
-					if (file.indexOf('PDF') >= 0){
-						store.push(pdf);
-					}
-					if (file.indexOf('Geo Rich Site Summary') >= 0){
-						store.push(georss);
-					}
-					if (file.indexOf('RSS') >= 0){
-						store.push(rss);
-					}
-					if (file.indexOf('JSON') >= 0){
-						store.push(json);
-					}
-					if (file.indexOf('CSV') >= 0){
-						if ((userDomain == "Crime Statistics" || userDomain == "Public Facilities")  && userCity == "City of Vancouver"){
+					
+					if (fileArray.length == 1) { // If there is just a single file for a dataset (seen in the "File Format(s)" row of the ""Adoption of OD Standards by Cities" spreadsheet), then just output the text within the "Structuration" row
+						if (fileArray.indexOf("CSV") >= 0) {
 							csv = "<a class ='fileStructuration' data-toggle='tooltip' title='CSV: " + structure + "' style='color: black'><img src='images/CSV.svg' width='60' height='70'></a>";
-							xls = "<a class ='fileStructuration' data-toggle='tooltip' title='XLS: " + structure + "' style='color: black'><img src='images/XLS.svg' width='60' height='70'></a>";
-							store.push(csv, xls)
-						} else {
 							store.push(csv);
 						}
-					}
-					if (file.indexOf('OData') >= 0){
-						store.push(odata);
-					}
-					if (file.indexOf('RDF') >= 0){
-						store.push(rdf);
-					}
-					if (file.indexOf('SODA API') >= 0){
-						store.push(soda);
-					}
-					if ((file.indexOf('XLSX') >= 0) || (file.indexOf("Excel Microsoft Office Open Extensible Markup Language Format Spreadsheet") >= 0)){
-						store.push(xlsx);
-					}
-					if (file.indexOf('SHP') >= 0){
-						store.push(shp);
-					}
-					if (file.indexOf('DWG') >= 0){
-						store.push(dwg);
-					}
-					if (file.indexOf('GDB') >= 0){
-						if (userCity == "City of Surrey" && userDomain == "Public Facilities"){
-							gdb = "<a class ='fileStructuration' data-toggle='tooltip' title='GDB' style='color: black'><img src='images/GDB.svg' width='60' height='70'></a>";
-							store.push(gdb);
-						} else {
+						if (fileArray.indexOf("PDF") >= 0) {
+							pdf = "<a class ='fileStructuration' data-toggle='tooltip' title='PDF: " + structure + "' style='color: black'><img src='images/PDF.svg' width='60' height='70'></a>";
+							store.push(pdf);
+						}
+						if (fileArray.indexOf("RSS") >= 0) {
+							rss = "<a class ='fileStructuration' data-toggle='tooltip' title='RSS: " + structure + "' style='color: black'><img src='images/RSS.svg' width='60' height='70'></a>";
+							store.push(rss);
+						}
+						if (fileArray.indexOf("RDF") >= 0) {
+							rdf = "<a class ='fileStructuration' data-toggle='tooltip' title='RDF: " + structure + "' style='color: black'><img src='images/RDF.svg' width='60' height='70'></a>";
+							store.push(rdf);
+						}
+						if (fileArray.indexOf("SODA API") >= 0) {
+							soda = "<a class ='fileStructuration' data-toggle='tooltip' title='SODA API: " + structure + "' style='color: black'><img src='images/SODA_API.svg' width='60' height='70'></a>";
+							store.push(soda);
+						}
+						if (fileArray.indexOf("XLS") >= 0) {
+							xls = "<a class ='fileStructuration' data-toggle='tooltip' title='XLS: " + structure + "' style='color: black'><img src='images/XLS.svg' width='60' height='70'></a>";
+							store.push(xls);
+						}
+						if ((fileArray.indexOf("XLSX") >= 0) || (fileArray.indexOf("Excel Microsoft Office Open Extensible Markup Language Format Spreadsheet") >= 0)){
+							xlsx = "<a class ='fileStructuration' data-toggle='tooltip' title='XLSX: " + structure + "' style='color: black'><img src='images/XLSX.svg' width='60' height='70'></a>";
+							store.push(xlsx);
+						}
+						if (fileArray.indexOf("KML") >= 0) {
+							kml = "<a class ='fileStructuration' data-toggle='tooltip' title='KML: " + structure + "' style='color: black'><img src='images/KML.svg' width='60' height='70'></a>";
+							store.push(kml);
+						}
+						if (fileArray.indexOf("ArcGIS Rest API") >= 0){
+							arcgis = "<a class ='fileStructuration' data-toggle='tooltip' title='ArcGIS Rest API: " + structure + "' style='color: black'><img src='images/ArcGIS.svg' width='60' height='70'></a>";
+							store.push(arcgis);
+						}
+						if (fileArray.indexOf("DWG") >= 0) {
+							dwg = "<a class ='fileStructuration' data-toggle='tooltip' title='DWG: " + structure + "' style='color: black'><img src='images/DWG.svg' width='60' height='70'></a>";
+							store.push(dwg);
+						}
+						if (fileArray.indexOf("Geo JavaScript Object Notation") >= 0) {
+							geojson = "<a class ='fileStructuration' data-toggle='tooltip' title='GeoJSON: " + structure + "' style='color: black'><img src='images/GeoJSON.svg' width='60' height='70'></a>";
+							store.push(geojson);
+						}
+						if (fileArray.indexOf("ATOM") >= 0) {
+							atom = "<a class ='fileStructuration' data-toggle='tooltip' title='ATOM: " + structure + "' style='color: black'><img src='images/ATOM.svg' width='60' height='70'></a>";
+							store.push(atom);
+						}
+						if (fileArray.indexOf("TXT") >= 0) {
+							txt = "<a class ='fileStructuration' data-toggle='tooltip' title='TXT: " + structure + "' style='color: black'><img src='images/TXT.svg' width='60' height='70'></a>";
+							store.push(txt);
+						}
+						if (fileArray.indexOf("Geo Rich Site Summary") >= 0){
+							georss = "<a class ='fileStructuration' data-toggle='tooltip' title='GeoRSS: " + structure + "' style='color: black'><img src='images/GeoRSS.svg' width='60' height='70'></a>";
+							store.push(georss);
+						}
+						if (fileArray.indexOf("OData") >= 0){
+							odata = "<a class ='fileStructuration' data-toggle='tooltip' title='OData: " + structure + "' style='color: black'><img src='images/OData.svg' width='60' height='70'></a>";
+							store.push(odata);
+						}
+						if (fileArray.indexOf("SHP") >= 0) {
+							shp = "<a class ='fileStructuration' data-toggle='tooltip' title='SHP: " + structure + "' style='color: black'><img src='images/SHP.svg' width='60' height='70'></a>";
+							store.push(shp);
+						}
+						if (fileArray.indexOf("GDB") >= 0){
+							gdb = "<a class ='fileStructuration' data-toggle='tooltip' title='GDB: " + structure + "' style='color: black'><img src='images/GDB.svg' width='60' height='70'></a>";
 							store.push(gdb);
 						}
+						if (fileArray.indexOf("KMZ") >= 0){
+							kmz = "<a class ='fileStructuration' data-toggle='tooltip' title='KMZ: " + structure + "' style='color: black'><img src='images/KMZ.svg' width='60' height='70'></a>";
+							store.push(kmz);
+						}
+						if (fileArray.indexOf("JSON") >= 0) {
+							json = "<a class ='fileStructuration' data-toggle='tooltip' title='JSON: " + structure + "' style='color: black'><img src='images/JSON.svg' width='60' height='70'></a>";
+							store.push(json);
+						}
+						if (fileArray.indexOf("XML") >= 0) {
+							xml = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure + "' style='color: black'><img src='images/XML.svg' width='60' height='70'></a>";
+							store.push(xml);
+						}
+						if (fileArray.indexOf("N/A") >= 0){
+							na = "N/A";
+							store.push(na);
+						}
 					}
-					if (file.indexOf('Geo JavaScript Object Notation') >= 0){
-						store.push(geojson);
+					
+					function createFiles(i) { // This function runs if there is more than one file type provided for a dataset. It creates the file icon if the file type is mentioned in the "Structuration" row of the "Adoption of OD Standards by Cities" spreadsheet
+					
+						console.log(structureSplit[i])
+					
+						if (structureSplit[i].indexOf("CSV") >= 0){ // If there is a CSV file format
+							csv = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structureSplit[i] + "' style='color: black'><img src='images/CSV.svg' width='60' height='70'></a>";
+							store.push(csv); // Store the CSV icon into the store array 
+						}
+						if (structureSplit[i].indexOf("PDF") >= 0){
+							pdf = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structureSplit[i] + "' style='color: black'><img src='images/PDF.svg' width='60' height='70'></a>";
+							store.push(pdf);
+						}
+						if (structureSplit[i].indexOf("RSS") >= 0){
+							rss = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structureSplit[i] + "' style='color: black'><img src='images/RSS.svg' width='60' height='70'></a>";
+							store.push(rss);
+						}
+						if (structureSplit[i].indexOf("RDF") >= 0){
+							rdf = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structureSplit[i] + "' style='color: black'><img src='images/RDF.svg' width='60' height='70'></a>";
+							store.push(rdf);
+						}
+						if (structureSplit[i].indexOf("SODA API") >= 0){
+							soda = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structureSplit[i] + "' style='color: black'><img src='images/SODA_API.svg' width='60' height='70'></a>";
+							store.push(soda);
+						}
+						if (structureSplit[i].indexOf("XLS") >= 0){
+							xls = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structureSplit[i] + "' style='color: black'><img src='images/XLS.svg' width='60' height='70'></a>";
+							store.push(xls);
+						}
+						if (structureSplit[i].indexOf("Excel Microsoft Office Open Extensible Markup Language Format Spreadsheet") >= 0){
+							xlsx = "<a class ='fileStructuration' data-toggle='tooltip' title='XLSX: " + structureSplit[i] + "' style='color: black'><img src='images/XLSX.svg' width='60' height='70'></a>";
+							store.push(xlsx);
+						}
+						if (structureSplit[i].indexOf("KML") >= 0){
+							kml = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structureSplit[i] + "' style='color: black'><img src='images/KML.svg' width='60' height='70'></a>";
+							store.push(kml);
+						}
+						if (structureSplit[i].indexOf("ArcGIS Rest API") >= 0){
+							arcgis = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structureSplit[i] + "' style='color: black'><img src='images/ArcGIS.svg' width='60' height='70'></a>";
+							store.push(arcgis);
+						}
+						if (structureSplit[i].indexOf("DWG") >= 0){
+							dwg = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structureSplit[i] + "' style='color: black'><img src='images/DWG.svg' width='60' height='70'></a>";
+							store.push(dwg);
+						}
+						if (structureSplit[i].indexOf("Geo JavaScript Object Notation") >= 0){
+							geojson = "<a class ='fileStructuration' data-toggle='tooltip' title='GeoJSON: " + structureSplit[i] + "' style='color: black'><img src='images/GeoJSON.svg' width='60' height='70'></a>";
+							geojson = "<a class ='fileStructuration' data-toggle='tooltip' title='GeoJSON: " + structureSplit[i] + "' style='color: black'><img src='images/GeoJSON.svg' width='60' height='70'></a>";
+							store.push(geojson);
+						}
+						if (structureSplit[i].indexOf("ATOM") >= 0){
+							atom = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structureSplit[i] + "' style='color: black'><img src='images/ATOM.svg' width='60' height='70'></a>";
+							store.push(atom);
+						}
+						if (structureSplit[i].indexOf("TXT") >= 0){
+							txt = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structureSplit[i] + "' style='color: black'><img src='images/TXT.svg' width='60' height='70'></a>";
+							store.push(txt);
+						}
+						if (structureSplit[i].indexOf("Geo Rich Site Summary") >= 0){
+							georss = "<a class ='fileStructuration' data-toggle='tooltip' title='GeoRSS: " + structureSplit[i] + "' style='color: black'><img src='images/GeoRSS.svg' width='60' height='70'></a>";
+							store.push(georss);
+						}
+						if (structureSplit[i].indexOf("OData") >= 0){
+							odata = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structureSplit[i] + "' style='color: black'><img src='images/OData.svg' width='60' height='70'></a>";
+							store.push(odata);
+						}
+						if (structureSplit[i].indexOf("SHP") >= 0){
+							shp = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structureSplit[i] + "' style='color: black'><img src='images/SHP.svg' width='60' height='70'></a>";
+							store.push(shp);
+						}
+						if (structureSplit[i].indexOf("GDB") >= 0){
+							gdb = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structureSplit[i] + "' style='color: black'><img src='images/GDB.svg' width='60' height='70'></a>";
+							store.push(gdb);
+						}
+						if (structureSplit[i].indexOf("KMZ") >= 0){
+							kmz = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structureSplit[i] + "' style='color: black'><img src='images/KMZ.svg' width='60' height='70'></a>";
+							store.push(kmz);
+						}
+						if (structureSplit[i].indexOf("JSON") >= 0){
+							json = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structureSplit[i] + "' style='color: black'><img src='images/JSON.svg' width='60' height='70'></a>";
+							store.push(json);
+						}
+						if (structureSplit[i].indexOf("XML") >= 0){
+							xml = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structureSplit[i] + "' style='color: black'><img src='images/XML.svg' width='60' height='70'></a>";
+							store.push(xml);
+						}
+						if (structureSplit[i].indexOf("N/A") >= 0){
+							na = "N/A";
+							store.push(na);
+						}
+						return store;
 					}
-					if (file.indexOf('KMZ') >= 0){
-						store.push(kmz);
-					}
-					if (file.indexOf('KML') >= 0){
-						store.push(kml);
-					}
-					if (file.indexOf('ArcGIS Rest API') >= 0){
-						store.push(arcgis);
-					}
-					if (file.indexOf('TXT') >= 0){
-						store.push(txt);
-					}
-					if (file.indexOf('N/A') >= 0) {
-						store.push(na);
-					}
+					
 					var filter = store.filter(function(elem, index, self){ // This function removes any duplicates that could appear in the store array 
 						return index == self.indexOf(elem);
 					});
-					var filesJoined = filter.join("  "); // This removes the commas between each file type variable 
+					var filesJoined = filter.join("  "); // This removes the commas between each file icon (for presentation)
 					return filesJoined; // Return the file type images with their associated bubbles for an individual dataset 
 				};
 					
