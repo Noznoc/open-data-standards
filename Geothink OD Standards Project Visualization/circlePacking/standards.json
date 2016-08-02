@@ -11,9 +11,15 @@
 				]
 			},
 			{
-				"title2": "Socrata Open Budget Schema",
+				"title2": "Socrata's Operating Budget Schema",
 				"children": [
-					{"name":"Socrata Open Budget Schema", "size": 10000, "link": "https://docs.google.com/document/d/1iUfkMB17vtANwF2z7_WnS-vPTTYdQFJRxsBbSR2WTk4/edit"}
+					{"name":"Socrata's Operating Budget Schema", "size": 10000, "link": "https://docs.google.com/document/d/1KWPMeUzWJv8hmG6LBvHRXlm4hnxFYNxm_bNpetBvTeI/edit#"}
+				]
+			},
+			{
+				"title2": "Socrata's Capital Budget Schema",
+				"children": [
+					{"name":"Socrata's Capital Budget Schema", "size": 10000, "link": "https://support.socrata.com/hc/en-us/articles/215303918-Capital-Budget-Data-Schema"}
 				]
 			},
 			{
