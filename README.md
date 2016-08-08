@@ -22,4 +22,4 @@ Either interact with the (unfinished) product here: http://geothink.ca/opendatas
 Contact
 --------
 
-As this visualization is still incomplete, any feedback would be great. Please email julia.conzon@mail.mcgill.ca if you have any questions or comments regarding the code or you can submit feedback directly on the test webpage (http://geothink.ca/opendatastandards/).  
+As this visualization is still incomplete, any feedback would be great. Please email julia.conzon@mail.mcgill.ca if you have any questions or comments regarding the code or you can submit feedback directly on the test web page (http://geothink.ca/opendatastandards/).  
