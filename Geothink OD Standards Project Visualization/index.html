@@ -715,6 +715,7 @@
 					var shp;
 					var gdb;
 					var kmz;
+					var ods;
 					var structureSplit;
 					
 					// This creates images for each file type and provides a popup that shows what is inside the "Structuration" row 
@@ -809,6 +810,10 @@
 							xml = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure + "' style='color: black'><img src='images/XML.svg' width='60' height='70'></a>";
 							store.push(xml);
 						}
+						if (fileArray.indexOf("ODS") >+ 0) {
+							ods = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structure + "' style='color: black'><img src='images/ODS.svg' width='60' height='70'></a>";
+							store.push(ods);
+						}
 						if (fileArray.indexOf("N/A") >= 0){
 							na = "N/A";
 							store.push(na);
@@ -899,6 +904,10 @@
 						if (structureSplit[i].indexOf("XML") >= 0){
 							xml = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structureSplit[i] + "' style='color: black'><img src='images/XML.svg' width='60' height='70'></a>";
 							store.push(xml);
+						}
+						if (structureSplit[i].indexOf("ODS") >= 0){
+							ods = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structureSplit[i] + "' style='color: black'><img src='images/ODS.svg' width='60' height='70'></a>";
+							store.push(ods);
 						}
 						if (structureSplit[i].indexOf("N/A") >= 0){
 							na = "N/A";
