@@ -162,7 +162,7 @@
 					<br/><font color="#000000" size="5"><strong>CLICK TO SEE WHAT OPEN DATA STANDARDS EXIST FOR HIGH-VALUE DATASETS</strong></font>
                 </div>
 				<div align = "center" id="circlePacking"> <!--for visualization-->
-					<iframe src="../circlePacking/index.html" width="500" height="470" frameBorder="0"></iframe>
+					<iframe src="./circlePacking/index.html" width="500" height="470" frameBorder="0"></iframe>
 				</div>
 			</div>
         </div>
@@ -300,9 +300,10 @@
 								<div id="cityDatasetsHeader"><strong><!-- Header is generated with JavaScript --></strong></div>
 								<br/>
 								<form>
-									<select id="cityDatasets" class="form-control"> <!-- Add another municipality here -->
+									<select id="cityDatasets" class="form-control"> <!-- ADD CITY: Add another municipality here -->
 										<option disabled selected value></option>
 										<option value="City of Edmonton">City of Edmonton</option>
+										<option value="City of Montreal">City of Montreal</option>
 										<option value="City of Ottawa">City of Ottawa</option>
 										<option value="City of Surrey">City of Surrey</option>
 										<option value="City of Toronto">City of Toronto</option>
@@ -681,7 +682,7 @@
 			}; // End of the outputData() function
 			
 			// The dashboard2Url is the URL with SQL that pulls certain data from the 'Adoption of OD Standards by Cities' Fusion Table. It pulls the data by column header, so if you want to add another city, just include the column header of the 'Adoption of OD Standards by Cities' Fusion Table 
-			var dashboard2Url = "https://www.googleapis.com/fusiontables/v1/query?sql=SELECT Domain, Info, Vancouver, Toronto, Surrey, Edmonton, Ottawa FROM 1YIPP6YulaL-VcYsCpgGkjRl1SOSUat7K7L6Z1U8O&key=AIzaSyDQ1oxpPOUkswaXP2yauME8JDOf52xlXAQ"; //old fusion table id: 1AQk8fDDms4Mi4bK9ILsPNeJ7SM95lycOwe7HIkYY
+			var dashboard2Url = "https://www.googleapis.com/fusiontables/v1/query?sql=SELECT Domain, Info, Vancouver, Toronto, Surrey, Edmonton, Ottawa, Montreal FROM 1YIPP6YulaL-VcYsCpgGkjRl1SOSUat7K7L6Z1U8O&key=AIzaSyDQ1oxpPOUkswaXP2yauME8JDOf52xlXAQ"; // ADD CITY. If a new city is added to the Fusion Table, then include the column header in the SQL URL
 			
 			var jqueryCities = $.get(dashboard2Url, function(data){ // Using jQuery to access the data from dashboard2Url
 				
@@ -816,7 +817,7 @@
 					
 					function createFiles(i) { // This function runs if there is more than one file type provided for a dataset. It creates the file icon if the file type is mentioned in the "Structuration" row of the "Adoption of OD Standards by Cities" spreadsheet
 					
-						console.log(structureSplit[i])
+						//console.log(structureSplit[i]) // This helps you see whether or not the structureSplit actually splits the string of text correctly
 					
 						if (structureSplit[i].indexOf("CSV") >= 0){ // If there is a CSV file format
 							csv = "<a class ='fileStructuration' data-toggle='tooltip' title='" + structureSplit[i] + "' style='color: black'><img src='images/CSV.svg' width='60' height='70'></a>";
@@ -933,22 +934,23 @@
 						var Ottawa;
 						var Vancouver;
 						var Edmonton; 
-						var Toronto; 
+						var Toronto;
+						var Montreal;
 						// ADD CITY add a new var of the city name
 						
 						if (data.rows[i][0] == userDomain){ // If the domain in the Fusion Table is equal to the domain that the user selected on the web page 
 							// Create new objects for each city that store the domain-specific dataset (e.g. if a user selects the Annual Budget domain, then each object will have the Annual Budget dataset stored)
-							Surrey = new city (4, "City of Surrey", data.rows[i][4], fileFormats("City of Surrey", userDomain, data.rows[i+1][4], data.rows[i+2][4]), data.rows[i+3][4], data.rows[i+4][4], data.rows[i+5][4])
-							Ottawa = new city (6, "City of Ottawa", data.rows[i][6], fileFormats("City of Ottawa", userDomain, data.rows[i+1][6], data.rows[i+2][6]), data.rows[i+3][6], data.rows[i+4][6], data.rows[i+5][6])
-							Toronto = new city (3, "City of Toronto", data.rows[i][3], fileFormats("City of Toronto", userDomain, data.rows[i+1][3], data.rows[i+2][3]), data.rows[i+3][3], data.rows[i+4][3], data.rows[i+5][3])
-							Vancouver = new city (2, "City of Vancouver", data.rows[i][2], fileFormats("City of Vancouver", userDomain, data.rows[i+1][2], data.rows[i+2][2]), data.rows[i+3][2], data.rows[i+4][2], data.rows[i+5][2])
-							Edmonton = new city (5, "City of Edmonton", data.rows[i][5], fileFormats("City of Edmonton", userDomain, data.rows[i+1][5], data.rows[i+2][5]), data.rows[i+3][5], data.rows[i+4][5], data.rows[i+5][5])
+							Surrey = new city (4, "City of Surrey", data.rows[i][4], fileFormats("City of Surrey", userDomain, data.rows[i+1][4], data.rows[i+2][4]), data.rows[i+3][4], data.rows[i+4][4], data.rows[i+5][4]);
+							Ottawa = new city (6, "City of Ottawa", data.rows[i][6], fileFormats("City of Ottawa", userDomain, data.rows[i+1][6], data.rows[i+2][6]), data.rows[i+3][6], data.rows[i+4][6], data.rows[i+5][6]);
+							Toronto = new city (3, "City of Toronto", data.rows[i][3], fileFormats("City of Toronto", userDomain, data.rows[i+1][3], data.rows[i+2][3]), data.rows[i+3][3], data.rows[i+4][3], data.rows[i+5][3]);
+							Vancouver = new city (2, "City of Vancouver", data.rows[i][2], fileFormats("City of Vancouver", userDomain, data.rows[i+1][2], data.rows[i+2][2]), data.rows[i+3][2], data.rows[i+4][2], data.rows[i+5][2]);
+							Edmonton = new city (5, "City of Edmonton", data.rows[i][5], fileFormats("City of Edmonton", userDomain, data.rows[i+1][5], data.rows[i+2][5]), data.rows[i+3][5], data.rows[i+4][5], data.rows[i+5][5]);
+							Montreal = new city (7, "City of Montreal", data.rows[i][7], fileFormats("City of Montreal", userDomain, data.rows[i+1][7], data.rows[i+2][7]), data.rows[i+3][7], data.rows[i+4][7], data.rows[i+5][7]);
 							// ADD CITY add a new object. The city number would depend on the column (firt column in spreadsheet is 0)
 							// IF ADDED NEW ROW then you must add a new property to each city  
 						}
 					}
-					
-					return [Surrey, Ottawa, Toronto, Vancouver, Edmonton]; // ADD CITY must include the city name here
+					return [Surrey, Ottawa, Toronto, Vancouver, Edmonton, Montreal]; // ADD CITY must include the city name here
 				};
 				
 				document.getElementById("cityDatasets").onchange = function (e){ // When a user selects a single municipality to see their domain-specific dataset, the following function will run
@@ -964,7 +966,8 @@
 					var Vancouver = cityInfo[3];
 					var Edmonton= cityInfo[4]; 
 					var Toronto = cityInfo[2]; 
-					// ADD CITY must include the city here
+					var Montreal = cityInfo[5];
+					// ADD CITY must include the city here, the new city should appear as the last instance of cityInfo
 					
 					// IF ADDED NEW ROW then you must add +1 to iteration because that means there are i +1 rows before a new domain in the Fusion Table
 					for (var i = 0; i < data.rows.length; i += 6){ // For loop that runs through the entire 'Adoption of OD Standards by Cities' Fusion table's domains. The loop needs to increment by 6 b/c every 6 rows in the Fusion Table indicates a different domain
@@ -986,6 +989,8 @@
 									cityDatasetInfo.innerHTML = "<br/><li><strong>Dataset Name: </strong>" + Ottawa.setName + "</li><br/>" + "<li><strong>Powered By: </strong>CKAN</strong></li><br/>" + "<li><strong>File Format(s) & Structuration: </strong>" + Ottawa.fileStructure + "</li><br/>" + "<li><strong>Metadata/Description of Data: </strong>" + Ottawa.dataDescription + "</li><br/>" + "<li><strong>Open Data Civic Schema: </strong>" + Ottawa.schema + "</li><br/>" + "<li><strong>Dataset(s) Source: </strong>" + Ottawa.link + "</li>";
 									// ADD CITY enter a new else if statement...
 									// IF ADDED NEW ROW then you must make sure to add the row info into each innerHTML here
+								} else if (userCity == "City of Montreal"){
+									cityDatasetInfo.innerHTML = "<br/><li><strong>Dataset Name: </strong>" + Montreal.setName + "</li><br/>" + "<li><strong>File Format(s) & Structuration: </strong>" + Montreal.fileStructure + "</li><br/>" + "<li><strong>Metadata/Description of Data: </strong>" + Montreal.dataDescription + "</li><br/>" + "<li><strong>Open Data Civic Schema: </strong>" + Montreal.schema + "</li><br/>" + "<li><strong>Dataset(s) Source: </strong>" + Montreal.link + "</li>";
 								} else {
 									cityDatasetInfo.innerHTML = "<br/><li><strong>Dataset Name: </strong>" + Edmonton.setName + "</li><br/>" + "<li><strong>Powered By: </strong>SOCRATA</strong></li><br/>" + "<li><strong>File Format(s) & Structuration: </strong>" + Edmonton.fileStructure + "</li><br/>" + "<li><strong>Metadata/Description of Data: </strong>" + Edmonton.dataDescription + "</li><br/>" + "<li><strong>Open Data Civic Schema: </strong>" + Edmonton.schema + "</li><br/>" + "<li><strong>Dataset(s) Source: </strong>" + Edmonton.link + "</li>";
 								} 
@@ -1014,7 +1019,10 @@
 					var Vancouver = cityInfo[3];
 					var Edmonton= cityInfo[4]; 
 					var Toronto = cityInfo[2]; 
-					// ADD CITY must include the city here
+					var Montreal = cityInfo[5];
+					// ADD CITY must include the city here, the new city should appear as the last instance of cityInfo
+					
+					console.log(Montreal)
 
 					for (var i = 0; i < data.rows.length; i += 6){ 
 						if (data.rows[i][0] == userDomain){
@@ -1022,21 +1030,22 @@
 						}
 					}
 					
+					// IF ADDED NEW ROW then add a new else statement with userDatasetProperty == "new row"
+					// ADD CITY then make sure to include the new city in the cityComparisonsInfo.innerHTML
+					
 					if (domainInfo == userDomain) { // Accounts for closure, if the domain the user selected is equal to a domain that is shown in the Fusion Table		
 						for (var i = 0; i < data.rows.length; i += 6){
 							if (data.rows[i][0] == userDomain){ 
 								if (userDatasetProperty == "Dataset Name"){ // If the dataset property the user selected is the "Dataset Name", the output will be every cities' dataset name
-									cityComparisonsInfo.innerHTML = "<br/><li><strong>City of Surrey: </strong>" + Surrey.setName + "</li><br/><li><strong>City of Ottawa: </strong>" + Ottawa.setName + "</li><br/><li><strong>City of Toronto: </strong>" + Toronto.setName + "</li><br/><li><strong>City of Vancouver: </strong>" + Vancouver.setName + "</li><br/><li><strong>City of Edmonton: </strong>" + Edmonton.setName + "</li>";
+									cityComparisonsInfo.innerHTML = "<br/><li><strong>City of Surrey: </strong>" + Surrey.setName + "</li><br/><li><strong>City of Ottawa: </strong>" + Ottawa.setName + "</li><br/><li><strong>City of Toronto: </strong>" + Toronto.setName + "</li><br/><li><strong>City of Vancouver: </strong>" + Vancouver.setName + "</li><br/><li><strong>City of Edmonton: </strong>" + Edmonton.setName + "</li><br/><li><strong>City of Montreal: </strong>" + Montreal.setName + "</li>";
 								} else if (userDatasetProperty == "File Format(s) & Structuration"){
-									cityComparisonsInfo.innerHTML = "<br/><p style='text-align: center;'><strong>Hover over the file images for structuration info</strong></p><li><strong>City of Surrey: </strong>" + Surrey.fileStructure + "</li><br/><li><strong>City of Ottawa: </strong>" + Ottawa.fileStructure + "</li><br/>" + "<li><strong>City of Toronto: </strong>" + Toronto.fileStructure + "</li><br/><li><strong>City of Vancouver: </strong>" + Vancouver.fileStructure + "</li><br/>" + "<li><strong>City of Edmonton: </strong>" + Edmonton.fileStructure + "</li>";
+									cityComparisonsInfo.innerHTML = "<br/><p style='text-align: center;'><strong>Hover over the file images for structuration info</strong></p><li><strong>City of Surrey: </strong>" + Surrey.fileStructure + "</li><br/><li><strong>City of Ottawa: </strong>" + Ottawa.fileStructure + "</li><br/>" + "<li><strong>City of Toronto: </strong>" + Toronto.fileStructure + "</li><br/><li><strong>City of Vancouver: </strong>" + Vancouver.fileStructure + "</li><br/>" + "<li><strong>City of Edmonton: </strong>" + Edmonton.fileStructure + "</li><br/><li><strong>City of Montreal: </strong>" + Montreal.fileStructure + "</li>";
 								} else if (userDatasetProperty == "Metadata/Description of Data"){
-									cityComparisonsInfo.innerHTML = "<br/><li><strong>City of Surrey: </strong>" + Surrey.dataDescription + "</li><br/><li><strong>City of Ottawa: </strong>" + Ottawa.dataDescription + "</li><br/><li><strong>City of Toronto: </strong>" + Toronto.dataDescription + "</li><br/><li><strong>City of Vancouver: </strong>" + Vancouver.dataDescription + "</li><br/><li><strong>City of Edmonton: </strong>" + Edmonton.dataDescription + "</li>";
+									cityComparisonsInfo.innerHTML = "<br/><li><strong>City of Surrey: </strong>" + Surrey.dataDescription + "</li><br/><li><strong>City of Ottawa: </strong>" + Ottawa.dataDescription + "</li><br/><li><strong>City of Toronto: </strong>" + Toronto.dataDescription + "</li><br/><li><strong>City of Vancouver: </strong>" + Vancouver.dataDescription + "</li><br/><li><strong>City of Edmonton: </strong>" + Edmonton.dataDescription + "</li><br/><li><strong>City of Montreal: </strong>" + Montreal.dataDescription + "</li>";
 								} else if (userDatasetProperty == "Open Data Civic Schema"){ 
-									cityComparisonsInfo.innerHTML = "<br/><li><strong>City of Surrey: </strong>" + Surrey.schema + "</li><br/><li><strong>City of Ottawa: </strong>" + Ottawa.schema + "</li><br/><li><strong>City of Toronto: </strong>" + Toronto.schema + "</li><br/><li><strong>City of Vancouver: </strong>" + Vancouver.schema + "</li><br/><li><strong>City of Edmonton: </strong>" + Edmonton.schema + "</li>";
-									// IF ADDED NEW ROW then add a new else statement with userDatasetProperty == "new row"
-									// ADD CITY then make sure to include in the innerHTML the new city
+									cityComparisonsInfo.innerHTML = "<br/><li><strong>City of Surrey: </strong>" + Surrey.schema + "</li><br/><li><strong>City of Ottawa: </strong>" + Ottawa.schema + "</li><br/><li><strong>City of Toronto: </strong>" + Toronto.schema + "</li><br/><li><strong>City of Vancouver: </strong>" + Vancouver.schema + "</li><br/><li><strong>City of Edmonton: </strong>" + Edmonton.schema + "</li><br/><li><strong>City of Montreal: </strong>" + Montreal.schema + "</li>";
 								} else { // If the dataset property is the link to the dataste then output the dataset link
-									cityComparisonsInfo.innerHTML = "<br/><li><strong>City of Surrey: </strong>" + Surrey.link + "</li><br/><li><strong>City of Ottawa: </strong>" + Ottawa.link + "</li><br/><li><strong>City of Toronto: </strong>" + Toronto.link + "</li><br/><li><strong>City of Vancouver: </strong>" + Vancouver.link + "</li><br/><li><strong>City of Edmonton: </strong>" + Edmonton.link + "</li>";
+									cityComparisonsInfo.innerHTML = "<br/><li><strong>City of Surrey: </strong>" + Surrey.link + "</li><br/><li><strong>City of Ottawa: </strong>" + Ottawa.link + "</li><br/><li><strong>City of Toronto: </strong>" + Toronto.link + "</li><br/><li><strong>City of Vancouver: </strong>" + Vancouver.link + "</li><br/><li><strong>City of Edmonton: </strong>" + Edmonton.link + "</li><br/><li><strong>City of Montreal: </strong>" + Montreal.link + "</li>";
 								}
 							}
 						}
@@ -1115,8 +1124,7 @@
 					document.getElementById('feedbackFailure').style.display = "block";
 				});
 
-				// Callback handler that will be called regardless
-				// if the request failed or succeeded
+				// Callback handler that will be called regardless if the request failed or succeeded
 				request.always(function () {
 					// Reenable the inputs
 					$inputs.prop("disabled", false);
