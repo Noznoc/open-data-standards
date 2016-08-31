@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<title>Add Standard</title>
+
+		<!-- Bootstrap Core CSS -->
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+
+		<!-- Custom CSS -->
+		<link href="css/modern-business.css" rel="stylesheet">
+
+		<!-- Custom Fonts -->
+		<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+		
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+		<style>
+			body {
+				height: 100vh;
+				height: 100vh;
+			}
+			#userFeedback {
+				display: none;
+			}
+			#feedbackSuccess {
+				display: none;
+			}
+			#feedbackFailure {
+				display: none;
+			}
+			#feedbackWarning {
+				display: none;
+			}
+			#userFeedbackHeader :hover {
+				color: #028391; 
+			}
+			.geothinkLogo :hover {
+				transform: scale(1.2, 1.2);
+				opacity: 1;
+			}
+			.text-field {
+				-moz-box-sizing: border-box;
+				border: 1px solid #EEEEEE;
+				font-family: "Source Sans Pro",Arial,sans-serif;
+				font-size: 0.73684em;
+				font-weight: 600;
+				height: 37px;
+				margin: 0;
+				padding: 5px;
+				width: 100%;
+			}
+			.autocomplete-suggestion {
+				overflow: hidden;
+				padding: 2px 5px;
+				white-space: nowrap;
+				background: #FFFFFF
+			}
+			.autocomplete-suggestions strong {
+				color: #0283b0;
+				font-weight: normal;
+			}
+			.autocomplete-selected{
+			  background:#FFFFFF;
+			}
+			#feedbackDomain {
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- Well for if a user wants to add their own standard to the database -->
+		<div class="well">
+            <div class="row">
+                <div id="addStandard" class="col-lg-12">
+					<div id="userAddStandardHeader">
+						<label for="userAddStandardBody"><h4><strong><i class="glyphicon glyphicon-exclamation-sign"></i> SUBMIT A NEW STANDARD</strong></h4></label>
+					</div>
+					<form id="userAddStandardBody">
+						<!-- Input 1: input the standard's name -->
+						<label class="control-label" for="input1">Standard Name </label>  <a data-toggle="tooltip" title="Please note the name of the standard (e.g., General Transit Feed Specificaton)." style="color: black"><i id="Label0" class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size: 17px; color: #0283b0"></i></a>
+						<input id="input1" class="form-control" name="Name" type="text" value=""/>
+						<br/>
+						<!-- Input 2: input the standard's domain (e.g., Real-Time Transit, Crime Statsitics) -->
+						<label for="input2" class="control-label"><strong>High-Valued Dataset Type </strong></label>  <a data-toggle="tooltip" title="Please note the high-valued dataset type of the standard (e.g., Real-Time Transit)." style="color: black"><i id="Label1" class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size: 17px; color: #0283b0"></i></a>
+						<input type="text" id="input2" class="form-control" name="Domain" autocomplete="off" placeholder="Please only enter a dataset type from the list" value=""/>
+						<br/>
+						<!-- Input 3: input the standard's publisher -->
+						<label for="input3">Publisher </label>  <a data-toggle="tooltip" title="Please note the actors in charge of the standard’s conception and further development." style="color: black"><i id="Label2" class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size: 17px; color: #0283b0"></i></a>
+						<input id="input3" class="form-control" name="Publisher" type="text" value=""/>
+						<br/>
+						<!-- Input 4: input the standard's publisher's reputation -->
+						<label for="input4">Publisher Reputation </label>  <a data-toggle="tooltip" title="Please provide background information about an organization or company and their level of expertise regarding standards." style="color: black"><i id="Label3" class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size: 17px; color: #0283b0"></i></a>
+						<input id="input4" class="form-control" name="PublisherRep" type="text" value=""/>
+						<br/>
+						<!-- Input 5: input the standard's license name -->
+						<label for="input5">License Name </label>  <a data-toggle="tooltip" title="Please note the license information of the standard (e.g., Creative Commons)." style="color: black"><i id="Label4" class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size: 17px; color: #0283b0"></i></a>
+						<input id="input5" class="form-control" name="License" type="License" value=""/>
+						<br/>
+						<!-- Input 6: input the standard's description -->
+						<label for="input6">Description of Standard </label>  <a data-toggle="tooltip" title="Please provide the background information about the publisher’s objective for the standard and a brief statement about the required content and schema of the standard." style="color: black"><i id="Label5" class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size: 17px; color: #0283b0"></i></a>
+						<input id="input6" class="form-control" name="Description" type="text" value=""/>
+						<br/>
+						<!-- Input 7: input the stage in development of the standard -->
+						<label for="input7">Stage in Development </label>  <a data-toggle="tooltip" title="Please note if the standard is either in their draft or completed stage." style="color: black"><i id="Label6" class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size: 17px; color: #0283b0"></i></a>
+						<select id="input7" class="form-control" name="StageInDevelopment">
+							<option disabled selected value></option>
+							<option value="Completed">Completed</option>
+							<option value="Draft">Draft</option>
+						</select>
+						<br/>
+						<!-- Input 8: input the version of the standard -->
+						<label for="input8">Version </label>  <a data-toggle="tooltip" title="Please provide the version of the standard. If the standard is a draft enter the version as N/A." style="color: black"><i id="Label7" class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size: 17px; color: #0283b0"></i></a>
+						<input class="form-control" id="input8" name="Version" type="text" value=""/>
+						<br/>
+						<!-- Input 9: input when the standard was last updated -->
+						<label for="input9">When was the Standard Updated Last (m-d-y) </label>  <a data-toggle="tooltip" title="Please note when the publisher(s) last updated the standard." style="color: black"><i id="Label8" class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size: 17px; color: #0283b0"></i></a> 
+						<input id="input9" class="form-control" name="Updated" type="text" value=""/>
+						<br/>
+						<!-- Input 10: input the level of adoption by city governments -->
+						<label for="input10">Level of Adoption by City Governments </label>  <a data-toggle="tooltip" title="Please provide a list of cities who have adopted, or have proposed to adopt, this standard." style="color: black"><i id="Label9" class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size: 17px; color: #0283b0"></i></a> 
+						<input id="input10" class="form-control" name="LvlAdopt" type="text" value=""/>
+						<br/>
+						<!-- Input 11: input the open license metric (yes/no/no data)-->
+						<label for="input11">Open License </label>  <a data-toggle="tooltip" title="Open License: What qualifies a standard as being “open” is debated. However, openness may be inferred when the standard is published under an open license. Open licenses iterate that anyone has the right to repurpose and share the material without restriction. Examples of open licenses include public domain licenses, the UK Open Government License v3, creative commons licenses, and open data common licenses (World Bank, Open Data Essentials)." style="color: white; text-decoration:none;"><i id="Label10" class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size: 17px; color: #0283b0"></i>    </a>
+						<label><input type="checkbox" id="input11" name="Open" value="Yes" /> Yes</label>
+						<label><input type="checkbox" id="input11" name="Open" value="No"/> No</label>
+						<label><input type="checkbox" id="input11" name="Open" value="No Data"/> No Data</label>
+						<br/>
+						<br/>
+						<!-- Input 12: input the transferability to other stakeholders metric -->
+						<label for="input12">Transferability to Other Stakeholders </label>  <a data-toggle="tooltip" title="Transferable to Other Jurisdictions: There is a hierarchy regarding the ease of implementation for a standard. For example, CSV format of a standard requires a minimal degree of resources and technical knowledge. On the other hand, more complex and sophisticated ways of formatting standards, such as RDF and SOAP, are not as easy for municipal bodies to implement. More often than not, sophisticated formats tend not to be manageable for municipal actors that lack resources and technical background. Standards that handle dynamic data and cURL APIs exemplify more complex ways of publishing city datasets." style="text-decoration:none;"><i id="Label11" class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size: 17px; color: #0283b0"></i>    </a>
+						<label><input type="checkbox" id="input12" name="Tranferability" value="Yes" /> Yes</label>
+						<label><input type="checkbox" id="input12" name="Tranferability" value="No"/> No</label>
+						<label><input type="checkbox" id="input12" name="Tranferability" value="No Data"/> No Data</label>
+						<br/>
+						<!-- Input 13: input the rationale for input 12 -->
+						<label for="input13">Transferability to Other Stakeholders Rationale </label> <!-- Where user can enter their name --> 
+						<input id="input13" class="form-control" name="TransRationale" type="text" value=""/>
+						<br/>
+						<!-- Input 14: input the standard's stakeholder participation metric -->
+						<label for="input14">Stakeholder Participation </label>  <a data-toggle="tooltip" title="Stakeholder Participation: Stakeholders for a standard include civil society, government, and the private sector. An open standard should aim to include all types of stakeholders in its conception and maintenance. Types of stakeholder participation can be inferred based on the types of publisher reputations." style="text-decoration:none;"><i id="Label12" class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size: 17px; color: #0283b0"></i>    </a>
+						<label><input type="checkbox" id="input14" name="StakeholderParticipation" value="Yes" /> Yes</label>
+						<label><input type="checkbox" id="input14" name="StakeholderParticipation" value="No"/> No</label>
+						<label><input type="checkbox" id="input14" name="StakeholderParticipation" value="No Data"/> No Data</label>
+						<br/>
+						<!-- Input 15: input the rationale for input 14 -->
+						<label for="input15">Stakeholder Participation Rationale </label> <!-- Where user can enter their name --> 
+						<input id="input15" class="form-control" name="StakeholderParticipationRationale" type="text" value=""/>
+						<br/>
+						<!-- Input 16: input the consensus-based governance metric -->
+						<label for="input16">Consensus-Based Governance </label>  <a data-toggle="tooltip" title="Consensus-Based Governance: Standardization implies an ongoing dialogue between producers and consumers of data. It is important to note that consensus-based governance does not mean that all inputs are accepted if the majority agrees. Instead, consensus-based indicates a process willing to address any request pertaining to the standard’s statement of purpose.  A charter providing transparency of decisions about the standard’s evolution support a consensus-based approach. Consensus-based governance can be inferred by the presence of a mailing list or active working group for the standard." style="text-decoration:none;"><i id="Label13" class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size: 17px; color: #0283b0"></i>    </a>
+						<label><input type="checkbox" id="input16" name="ConsensusGov" value="Yes" /> Yes</label>
+						<label><input type="checkbox" id="input16" name="ConsensusGov" value="No"/> No</label>
+						<label><input type="checkbox" id="input16" name="ConsensusGov" value="No Data"/> No Data</label>
+						<br/>
+						<!-- Input 17: input the rationale for input 16 -->
+						<label for="input17">Consensus-Based Governance Rationale </label> 
+						<input id="input17" class="form-control" name="ConsensusGovRationale" type="text" value=""/>
+						<br/>
+						<!-- Input 18: input the extensions metric -->
+						<label for="input18">Extensions </label>  <a data-toggle="tooltip" title="Extensions: This column indicates the flexibility of a standard’s implementation. In addition, extensibility of a standard provides insight into how a standard is being implemented and enhanced for specific purposes." style="text-decoration:none;"><i id="Label14" class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size: 17px; color: #0283b0"></i>    </a>
+						<label><input type="checkbox" id="input18" name="Extensions" value="Yes" /> Yes</label>
+						<label><input type="checkbox" id="input18" name="Extensions" value="No"/> No</label>
+						<label><input type="checkbox" id="input18" name="Extensions" value="No Data"/> No Data</label>
+						<br/>
+						<!-- Input 19: input the rationale for input 18 -->
+						<label for="input19">Extension Indicators </label>
+						<input id="input19" class="form-control" name="ExtensionsIndicators" type="text" value=""/>
+						<br/>
+						<!-- Input 20: input the machine readable metric -->
+						<label for="input20">Machine Readable </label>  <a data-toggle="tooltip" title="Machine Readable: Acceptable machine readable structures include XML, RSS feed, CSV, RDF, JSON, TXT, XLS(X), and KML formats. Formats that are not machine readable include PDF, HTML, DOC(X), anything scanned, anything faxed, and anything typed in an email (Suszan, 2014). Standard’s ought to compliment techniques to provide human and machine readable structures for the data. Publishing data as machine readable includes (1) established standard vocabularies, (2) enriching the HTML resources with metadata, semantics, and identifiers, (3) and implementing simple, manageable, and stable URIs (Bennett and Harvey, 2009). Data tables, according to the standard’s specification, should be normalized so to be incorporated into a relational database." style="text-decoration:none;"><i id="Label15" class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size: 17px; color: #0283b0"></i>    </a>
+						<label><input type="checkbox" id="input20" name="MachineReadable" value="Yes" /> Yes</label>
+						<label><input type="checkbox" id="input20" name="MachineReadable" value="No"/> No</label>
+						<label><input type="checkbox" id="input20" name="MachineReadable" value="No Data"/> No Data</label>
+						<br/>
+						<!-- Input 21: input the rationale for input 20 -->
+						<label for="input21">Machine Readable Rationale </label>
+						<input id="input21" class="form-control" name="MachineRationale" type="text" value=""/>
+						<br/>
+						<!-- Input 22: input the human readable metric -->
+						<label for="input22">Human Readable </label>  <a data-toggle="tooltip" title="Human Readable: Human readable requires a medium of data or information that can easily be understood by people. Therefore, the standard should encode the data by using easily identifiable text. Of course, there are semantic consideration for human readable standards. For example, there could be a variety of interpretive meanings associated with encoding the data through text." style="text-decoration:none;"><i id="Label16" class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size: 17px; color: #0283b0"></i>    </a>
+						<label><input type="checkbox" id="input22" name="HumanReadable" value="Yes" /> Yes</label>
+						<label><input type="checkbox" id="input22" name="HumanReadable" value="No"/> No</label>
+						<label><input type="checkbox" id="input22" name="HumanReadable" value="No Data"/> No Data</label>
+						<br/>
+						<!-- Input 23: input the rationale for input 22 -->
+						<label for="input23">Human Readable Rationale </label>
+						<input id="input23" class="form-control" name="HumanRationale" type="text" value=""/>
+						<br/>
+						<!-- Input 24: input the requires up-to-date data rationale -->
+						<label for="input24">Requires Up-To-Date Data </label>  <a data-toggle="tooltip" title="Requires Up-To-Date Data: This metric varies depending on the domain of the data. Some domains require formats that handle data in real time. However, other domains may require that the standard specify that data be updated quarterly or annually. For example, standards that handle transit and road construction data would require a web feed format to deliver updates about developments as they occur. However, budget datasets only requires a quarterly or yearly update. In practice, many municipal publishers still publish data in static files." style="text-decoration:none;"><i id="Label17" class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size: 17px; color: #0283b0"></i>    </a>
+						<label><input type="checkbox" id="input24" name="RealTimeData" value="Yes" /> Yes</label>
+						<label><input type="checkbox" id="input24" name="RealTimeData" value="No"/> No</label>
+						<label><input type="checkbox" id="input24" name="RealTimeData" value="No Data"/> No Data</label>
+						<br/>
+						<!-- Input 25: input the rationale for input 24 -->
+						<label for="input25">Requires Up-To-Date Data Rationale </label>
+						<input id="input25" class="form-control" name="RealTimeRationale" type="text" value=""/>
+						<br/>
+						<!-- Input 26: input the metadata metric -->
+						<label for="input26">Takes into Account Associated Metadata for the Dataset </label>  <a data-toggle="tooltip" title="Takes into Account Associated Metadata for the Dataset: This metric checks whether the standard schema requires metadata. A “yes” for this metric indicates a presence of both descriptive and structural metadata for the primary data. Each standard should readily make available the time and date of the data’s creation, the author, location of the data on the computer networks, and information about any standard applied to the raw data. Metadata should have embedded permanent and/or discoverable URIs and should utilize electronic citations of the data in the form of hyperlinks (Bennett and Harvey, 2009)." style="text-decoration:none;"><i id="Label18" class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size: 17px; color: #0283b0"></i>    </a>
+						<label><input type="checkbox" id="input26" name="Metadata" value="Yes" /> Yes</label>
+						<label><input type="checkbox" id="input26" name="Metadata" value="No"/> No</label>
+						<label><input type="checkbox" id="input26" name="Metadata" value="No Data"/> No Data</label>
+						<br/>
+						<!-- Input 27: input the rationale for input 26 -->
+						<label for="input27">Takes into Account Associated Metadata for the Dataset Rationale </label>
+						<input id="input27" class="form-control" name="MetadataRationale" type="text" value=""/>
+						<br/>
+						<!-- Input 28: input of an example of the standard -->
+						<label for="input28">Example of standard </label>    <a data-toggle="tooltip" title="Please provide a link to an actual implementation for each standard." style="text-decoration:none;"><i id="Label18" class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size: 17px; color: #0283b0"></i>    </a>
+						<input id="input28" class="form-control" name="Example" type="text" value=""/>
+						<br/>
+						<!-- Input 29: Describe the example -->
+						<label for="input29">Description of the standard's example </label>    <a data-toggle="tooltip" title="Please provide a description for the actual implementation for each standard (e.g., Montreal bus routes in XML format)." style="text-decoration:none;"><i id="Label18" class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size: 17px; color: #0283b0"></i>    </a>
+						<input id="input29" class="form-control" name="ExampleInfo" type="text" value=""/>
+						<br/>
+						<!-- Input 30: input URL to the standard's specifications -->
+						<label for="input30">Link to the standard's specifications </label>    <a data-toggle="tooltip" title="Please provide a link to the standard's specificaitons. This link may be the same as the following one." style="text-decoration:none;"><i id="Label18" class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size: 17px; color: #0283b0"></i>    </a>
+						<input id="input30" class="form-control" name="URL" type="text" value=""/>
+						<br/>
+						<!-- Input 31: input URL of contact information or general information about the standard -->
+						<label for="input31">Link to homepage of standard </label>    <a data-toggle="tooltip" title="Please provide a link to the standard's website. This link may be the same as the former one." style="text-decoration:none;"><i id="Label18" class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size: 17px; color: #0283b0"></i>    </a>
+						<input id="input31" class="form-control" name="ContactInfo" type="text" value=""/>
+						<br/>
+						<div class="alert alert-success" id="feedbackSuccess"> <!-- Success when the feedback is entered into the Feedback spreadsheet -->
+							<strong>Success!</strong> We have received your submission. Please wait a couple of hours before seeing your submission in the visualization.
+						</div>
+						<div class="alert alert-danger" id="feedbackFailure"> <!-- Failure pop up when there is a technical malfunction --> 
+							<strong>Failure!</strong> Your feedback was not received due to technical difficulties. Please retry at a different time.
+						</div>
+						<div class="alert alert-warning" id="feedbackWarning"> <!-- Warning when user does not write a comment --> 
+							<strong>Warning!</strong> Please provide any comments before you submit.
+						</div>
+						<div class="alert alert-danger" id="feedbackDomain"> <!-- Alert pop up when user does not select a known domain --> 
+							<strong>Alert!</strong> To ensure fair comparisons between municipal datasets, please ensure that the type of dataset you registered is from the list. Thank you.
+						</div>
+						<input class="btn btn-lg btn-default btn-block" type="submit" value="Send"/>
+					</form>
+                </div>
+			</div>
+        </div>
+		<!-- End of well -->
+		
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row" align="center">
+                <div class="col-lg-12" style="margin: 20px">
+					<p><a href="index.html" style="color: #0283b0"><strong>RETURN BACK TO VISUALIZATION</strong></a></p>
+                    <p>Webpage Design by Bootstrap's Modern Business Template 1.0.5</p>
+					<p><a class="geothinkLogo" href="http://geothink.ca/" target="_blank"><img src="images/Geothink.jpg" height="10%" width="10%"></a></p>
+                </div>
+            </div>
+        </footer>
+		<!-- End of footer -->
+		
+		</div>
+
+		<!-- jQuery -->
+		<script src="js/jquery.js"></script>
+		
+		<!--ajax for posting feedback-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+
+		<!-- Bootstrap Core JavaScript -->
+		<script src="js/bootstrap.min.js"></script>
+		
+		<!-- Ajax Autocomplete for jQuery plugin (http://stackoverflow.com/questions/19157249/autocomplete-without-jquery-ui) -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.devbridge-autocomplete/1.2.24/jquery.autocomplete.min.js"></script>
+
+		<script>
+		
+			var selectedDomain;
+			
+			a1 = $('#input2').autocomplete({ //autocomplete for the high-value dataset options
+				 width: 250,
+				 delimiter: /(,|;)\s*/,
+				 lookup: "Business Permits, Business Listing, Crime Statistic, Annual Budget, Expenditure, Procurement Contracts, Election Results, Campaign Finance Contributions, Lobbyist Activity, Food Safety, Zoning, Building Permits, Service Requests, Rezoning Permit Applications, Real-Time Transit, Transport Schedules, Public Facilities, Traffic Accidents, Road Construction, Natural Resources, Address Points".split(',')
+			});
+
+			$('[data-toggle="tooltip"]').tooltip(); // This creates the pop-up info balloons 
+			
+			$(document).ready(function(){	
+			
+				//The following rest of code was copied and modified from a Stackoverflow post: http://stackoverflow.com/questions/5004233/jquery-ajax-post-example-with-php/5004276#5004276 
+				
+				// Variable to hold request
+				var request;
+				
+				$("#userAddStandardBody").submit(function(event){
+				
+					if (request) {
+						request.abort();
+					}
+					
+					// setup some local variables
+					var $form = $(this);
+								
+					// Let's select and cache all the fields
+					var $inputs = $form.find("Name, Domain, Publisher, Open, License, Description, Transferability, TransRationale, StageInDevelopment, Version, Updated, StakeholderParticipation, StakeholderParticipationRationale, ConsensusGov, ConsensusGovRationale, LvlAdopt, Extensions, ExtensionsIndicators, MachineReadable, MachineRationale, HumanReadable, HumanRationale, RealTimeData, RealTimeRationale, Metadata, MetadataRationale, Example, ExampleInfo, ContactInfo, URL");
+
+					// Serialize the data in the form
+					var serializedData = $form.serialize();
+							
+					// Let's disable the inputs for the duration of the Ajax request.
+					// Note: we disable elements AFTER the form data has been serialized.
+					// Disabled form elements will not be serialized.
+					$inputs.prop("disabled", true);
+					
+					var allDomains = "Business Permits, Business Listing, Crime Statistic, Annual Budget, Expenditure, Procurement Contracts, Election Results, Campaign Finance Contributions, Lobbyist Activity, Food Safety, Zoning, Building Permits, Service Requests, Rezoning Permit Applications, Real-Time Transit, Transport Schedules, Public Facilities, Traffic Accidents, Road Construction, Natural Resources, Address Points".split(',')
+					var domain = document.getElementById("input2").value;
+					
+					if (allDomains.indexOf(domain) == -1){ // If the domain the user inputted does not exist in allDomains array
+						document.getElementById('feedbackDomain').style.display = "block"; // Give a warning
+						document.getElementById('input2').style.borderColor = '#ff6666';
+						event.preventDefault(); // Prevent page from refreshing 
+					} else {
+						// If there is something blank 
+						// Fire off the request to the Feedback Google spreadsheet
+						document.getElementById('feedbackDomain').style.display = "none"; // Give a warning
+						document.getElementById('input2').style.borderColor = '';
+						
+						request = $.ajax({
+							url: "https://script.google.com/macros/s/AKfycbwjT-2vpFYM7-bo9MWIqEO0oanH1AwowVi9cWWfxxXUXF-HhERl/exec",
+							type: "post",
+							data: serializedData
+						});
+									
+						// Callback handler that will be called on success
+						request.done(function (response, textStatus, jqXHR){
+							// Log a message to the console
+							document.getElementById('feedbackSuccess').style.display = "block";
+							console.log("Hooray, it worked!");
+						});
+
+						// Callback handler that will be called on failure
+						request.fail(function (jqXHR, textStatus, errorThrown){
+							// Log the error to the console
+							console.error(
+								"The following error occurred: "+
+								textStatus, errorThrown
+							);
+						});
+
+						// Callback handler that will be called regardless if the request failed or succeeded
+						request.always(function () {
+							// Reenable the inputs
+							$inputs.prop("disabled", false);
+						});
+						
+						// Prevent default posting of form
+						event.preventDefault();
+					}
+					
+					// Prevent default posting of form
+					event.preventDefault();					
+				});													
+			});
+		</script>
+	</body>
+</html>
