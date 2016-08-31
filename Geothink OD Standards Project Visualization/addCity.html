@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<title>Add City</title>
+
+		<!-- Bootstrap Core CSS -->
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+
+		<!-- Custom CSS -->
+		<link href="css/modern-business.css" rel="stylesheet">
+
+		<!-- Custom Fonts -->
+		<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+		
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+		<style>
+			body {
+				height: 100vh;
+				height: 100vh;
+			}
+			#userFeedback {
+				display: none;
+			}
+			#feedbackSuccess {
+				display: none;
+			}
+			#feedbackFailure {
+				display: none;
+			}
+			#feedbackDomain {
+				display: none;
+			}
+			#feedbackFiles {
+				display: none;
+			}
+			#userFeedbackHeader :hover {
+				color: #028391; 
+			}
+			.geothinkLogo :hover {
+				transform: scale(1.2, 1.2);
+				opacity: 1;
+			}
+			.text-field {
+				-moz-box-sizing: border-box;
+				border: 1px solid #EEEEEE;
+				font-family: "Source Sans Pro",Arial,sans-serif;
+				font-size: 0.73684em;
+				font-weight: 600;
+				height: 37px;
+				margin: 0;
+				padding: 5px;
+				width: 100%;
+			}
+			.autocomplete-suggestion {
+				overflow: hidden;
+				padding: 2px 5px;
+				white-space: nowrap;
+				background: #FFFFFF
+			}
+			.autocomplete-suggestions strong {
+				color: #0283b0;
+				font-weight: normal;
+			}
+			.autocomplete-selected{
+			  background:#FFFFFF;
+			}
+			#standardNameHeader {
+				display: none;
+			}
+			#standardName {
+				display: none;
+			}
+			#standardLinkHeader {
+				display: none;
+			}
+			#standardLink {
+				display: none;
+			}
+			#structuration {
+				display: none;
+			}
+			.toTheLeft {
+				width: 49%;
+				display: inline-block;
+				vertical-align: top;
+			}
+			.toTheRight {
+				width: 49%;
+				display: inline-block;
+				vertical-align: top;
+				float: right;
+			}
+			#addDataset {
+				display: none;
+			}
+			#sourceValue {
+				display: none;
+			}
+			#sourceName {
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- If a user wants to add a municipal dataset to the 'Adoption of OD Standards by Cities' Google Sheets -->
+		<div class="well">
+            <div class="row">
+                <div id="addCity" class="col-lg-12">
+					<div id="addCityHeader">
+						<label for="bar"><h4><strong><i class="glyphicon glyphicon-exclamation-sign"></i> SUBMIT A NEW CITY</strong></h4></label>
+					</div>
+					<form id="addCityBody">
+						<label for="input0" class="control-label"><strong>High-Valued Dataset Type </strong></label>  <a data-toggle="tooltip" title="Please note the type of municipal dataset (e.g., Real-Time Transit)." style="color: black"><i id="Label0" class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size: 17px; color: #0283b0"></i>    </a>
+						<input id="input0" class="form-control" name="Domain" type="text" value=""/>
+						<br/>
+						<label for="input1">Municipality </label>  <a data-toggle="tooltip" title="Provide the municipality (e.g., Vancouver or Montreal)." style="color: black"><i id="Label1" class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size: 17px; color: #0283b0"></i>     </a>
+						<input id="input1" class="form-control" name="Municipality" type="text" value=""/>
+						<br/>
+						<label class="control-label"><strong>How many Datasets?</strong></label>
+						<select id="numberDatasets" class="form-control"> <!-- Input 2: user selects how many datasets exist for a given municipal domain -->
+							<option disabled selected value></option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+						</select>
+						<div id='addDataset'>
+							<!-- Inputs for dataset name(s) and dataset source(s) will be added here once a user selects the amount of datasets -->
+						</div>
+						<br/>
+						<br/>
+						<input id="sourceValue" class="form-control" name="Source" type="text" value=""/> <!-- This is where the source will be stored and then uploaded onto the Google Sheet --> 
+						<input id="sourceName" class="form-control" name="Name" type="text" value=""/> <!-- This is where the dataset name will be stored and then uploaded onto the Google Sheet -->
+						<label for="input3" id="input3Label">File Format(s) </label>  <a data-toggle="tooltip" title="Input the file format(s) that the dataset offers. Please just type up a list (e.g., XML, CSV, XSLX)." style="color: black"><i id="Label3" class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size: 17px; color: #0283b0"></i>     </a>
+						<input type="text" id="input3" class="form-control" name="FileFormat" autocomplete="on" value=""/>
+						<br/>
+						<div class="alert alert-warning" id="feedbackFiles"> <!-- Warning pop-up if user inputs an unknown file format --> 
+							<strong>Warning!</strong> One of the file formats you have submitted is not stored in our database. Please either correct any mistakes otherwise this file format will not appear in the visualization until verification. Thank you.
+						</div>
+						<label for="input4">Structuration </label>  <a data-toggle="tooltip" title="Describe each file format. Please limit one sentence to each file description (e.g., XML: description. CSV: description. XLSX: description.)" style="color: black"><i id="Label4" class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size: 17px; color: #0283b0"></i>     </a>
+						<p><strong>Please limit structuration to one sentence for each file format</strong></p>
+						<div id="input4"></div>
+						<input id="structuration" name="Structuration" type="text" value=""/>
+						<br/>
+						<label for="input5">Metadata/Description of data </label>  <a data-toggle="tooltip" title="Note any applied metadata standard or background information about the data. If applicable, also note how and where metadata is stored in the open data catalogue." style="color: black"><i id="Label5" class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size: 17px; color: #0283b0"></i>     </a>
+						<input id="input5" class="form-control" name="Metadata" type="text" value=""/>
+						<br/>
+						<label for="input6">Civic Open Data Schema </label>  <a data-toggle="tooltip" title="Does the dataset have a standard?" style="color: black; text-decoration:none;"><i id="Label6" class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size: 17px; color: #0283b0"></i>    </a>
+						<label><input type="checkbox" class='yes' id="input10" name="StandardLink" value="" /> Yes</label>
+						<label><input type="checkbox" class='no' id="input11" name="StandardLink" value='<button type="button" class="btn btn-circle" style="color:white; background-color: #be4141">No Standard</button>'/> No</label>
+						<br/>
+						<label id="standardNameHeader" for="standardName">What is the name of the standard? </label>
+						<input id="standardName" class="form-control" type="text" value=""/>
+						<br/>
+						<label id="standardLinkHeader" for="StandardLink">What is the standard's website? </label>
+						<input id="standardLink" class="form-control" type="text" value=""/>
+						<br/>
+						<div class="alert alert-success" id="feedbackSuccess"> <!-- Success when all data is sent successfully to the Google Sheet -->
+							<strong>Success!</strong> We have received your submission. Please wait a couple of hours before seeing your submission in the visualization.
+						</div>
+						<div class="alert alert-danger" id="feedbackFailure"> <!-- Failure pop up when there is a technical malfunction --> 
+							<strong>Failure!</strong> Your feedback was not received due to technical difficulties. Please retry at a different time.
+						</div>
+						<div class="alert alert-danger" id="feedbackDomain"> <!-- Alert pop up when user does not select a known domain --> 
+							<strong>Alert!</strong> To ensure fair comparisons between municipal datasets, please ensure that the type of dataset you registered is from the list. Thank you.
+						</div>
+						<input id="submit" class="btn btn-lg btn-default btn-block" type="submit" value="Send"/>
+					</form>
+                </div>
+			</div>
+        </div>
+		<!-- End of form -->
+		
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row" align="center">
+                <div class="col-lg-12" style="margin: 20px">
+					<p><a href="index.html" style="color: #0283b0"><strong>RETURN BACK TO VISUALIZATION</strong></a></p>
+                    <p>Webpage Design by Bootstrap's Modern Business Template 1.0.5</p>
+					<p><a class="geothinkLogo" href="http://geothink.ca/" target="_blank"><img src="images/Geothink.jpg" height="10%" width="10%"></a></p>
+                </div>
+            </div>
+        </footer>
+		<!-- End of footer -->
+		
+		</div>
+
+		<!-- jQuery -->
+		<script src="js/jquery.js"></script>
+		
+		<!--ajax for posting feedback-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+
+		<!-- Bootstrap Core JavaScript -->
+		<script src="js/bootstrap.min.js"></script>
+		
+		<!-- Ajax Autocomplete for jQuery plugin (http://stackoverflow.com/questions/19157249/autocomplete-without-jquery-ui) -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.devbridge-autocomplete/1.2.24/jquery.autocomplete.min.js"></script>
+
+		<script>
+		
+			a1 = $('#input0').autocomplete({ // Code for autocomplete for the high-valued datasets
+				 width: 250,
+				 delimiter: /(,|;)\s*/,
+				 lookup: "Business Permits, Business Listing, Crime Statistic, Annual Budget, Expenditure, Procurement Contracts, Election Results, Campaign Finance Contributions, Lobbyist Activity, Food Safety, Zoning, Building Permits, Service Requests, Rezoning Permit Applications, Real-Time Transit, Transport Schedules, Public Facilities, Traffic Accidents, Road Construction, Natural Resources, Address Points".split(',')
+			});
+			
+			$('[data-toggle="tooltip"]').tooltip(); // This creates the pop-up info balloons
+			
+			document.getElementById("input10").onchange = function (e) { // Runs when the user selects either 'yes' or 'no' for whether or not the dataset has a standard 
+				var ifStandard;
+				var linkToStandard;
+				var standard = document.getElementById('standardName'); // Stores the standard name the user inputted
+
+				standardNameHeader.style.display = "block"; // Label of additional question asking for what the standard name is
+				standardName.style.display = "block"; // Where the user can enter the standard name
+				standardLinkHeader.style.display = "block"; // Display question asking for the link to the standard
+				standardLink.style.display = "block"; // Display input for the above question
+				document.getElementById("standardName").onchange = function (e){ // This ensures that the value stored in the spreadsheet is the standard name not 'yes'
+					ifStandard = document.getElementById("standardName").value; // Stores the name of the standard 
+				}
+				document.getElementById("standardLink").onchange = function (e) { // If someone enters in the link to the standard's website
+					linkToStandard = document.getElementById("standardLink").value; // Store the link
+					linkToStandard = '<button type="button" class="btn btn-circle" style="color:white; background-color: #72cf72"><a href="' + linkToStandard + '" target="_blank"><font color="#FFFFFF">' + ifStandard + '</font></a></button>'; // Output this into the spreadsheet for the dataset's standard
+					document.getElementById('input10').value = linkToStandard
+				}
+			};
+			
+			document.getElementById("input11").onchange = function (e) { // Runs when the user selects either 'yes' or 'no' for whether or not the dataset has a standard 
+				standardNameHeader.style.display = "none"; // Label of additional question asking for what the standard name is
+				standardName.style.display = "none"; // Where the user can enter the standard name
+				standardLinkHeader.style.display = "none"; // Display question asking for the link to the standard
+				standardLink.style.display = "none"; //Display input for the above question
+			};
+			
+			// Function to fix how the file formats are inputted
+			function fixFiles (files) {
+				var changeCase = files.toUpperCase(); // First make all file format inputs upper case 
+				var filesSplit = changeCase.split(', '); // Converts input into an array
+				
+				// The following 5 file formats are unique. GeoJSON, GeoRSS, and XLSX are affected by index.html code because .indexOf gets the three file formats confused with JSON, RSS, and XLS. Thus GeoJSON, GeoRSS, and XLSX must be converted into their full names. OData and ArcGIS Rest API are unique because they are not completed upper case 
+				var geoJson = changeCase.indexOf('GEOJSON'); // Get the index # within the user's input
+				var geoRss = changeCase.indexOf('GEORSS');
+				var xlsx = changeCase.indexOf('XLSX');
+				var arcgis = changeCase.indexOf('ARCGIS REST API');
+				var odata = changeCase.indexOf('ODATA');
+				var replaceJson = "Geo JavaScript Object Notation"; // Variables to replace the file formats with 
+				var replaceRss = "Geo Rich Site Summary";
+				var replaceXlsx = "Excel Microsoft Office Open Extensible Markup Language Format Spreadsheet";
+				var replaceArc = "ArcGIS Rest API";
+				var replaceOdata = "OData";
+				
+				if (geoJson >= 0) { // If geoJSON is a file format
+					$.each(filesSplit, function (key, val){
+						filesSplit[key] = val.replace("GEOJSON", replaceJson); // Replace GeoJSON with its long name
+					});
+				}
+				
+				if (geoRss >= 0) { // If geoRSS is a file format
+					$.each(filesSplit, function (key, val){
+						filesSplit[key] = val.replace("GEORSS", replaceRss); // Replace GeoRSS with its long name
+					});
+				}
+					
+				if (xlsx >= 0) { // If XLSX is a file format 
+					$.each(filesSplit, function (key, val){
+						filesSplit[key] = val.replace("XLSX", replaceXlsx); // Replace XLSX with its long name
+					});
+				}
+				
+				if (arcgis >= 0) { // If ArcGIS Rest API is a file format 
+					$.each(filesSplit, function (key, val){
+						filesSplit[key] = val.replace("ARCGIS REST API", replaceArc); // Replace ARCGIS REST API with ArcGIS Rest API
+					});
+				}
+				
+				if (odata >= 0) { // If OData is a file format 
+					$.each(filesSplit, function (key, val){
+						filesSplit[key] = val.replace("ODATA", replaceOdata); // Replace ODATA with OData
+					});
+				}
+				
+				return filesSplit;
+				 
+			}
+			
+			document.getElementById("input3").onchange = function (e) { // When a user inputs a list of file formats
+				document.getElementById("input4").innerHTML = fileStructuration(); // Run the fileStructuration() function within #input4
+				
+				var allFiles = "ArcGIS Rest API, ATOM, CSV, DWG, GDB, Geo JavaScript Object Notation, Geo Rich Site Summary, JSON, KML, KMZ, OData, ODS, PDF, RDF, SHP, SODA API, TXT, XLS, Excel Microsoft Office Open Extensible Markup Language Format Spreadsheet, XML".split(', '); // List of all files that exist in the visualization
+				var files = document.getElementById("input3").value; // Gets user input on file formats
+				var fixedFiles = fixFiles(files); // Fixes the file format list the user inputted in #input3
+				for (i = 0; i < fixedFiles.length; i++) { // If the user's file formats are not present in the allFiles array
+					if (allFiles.indexOf(fixedFiles[i]) == -1){
+						document.getElementById("feedbackFiles").style.display = "block"; // Send out a warning
+						document.getElementById("input3").style.borderColor = '#bdbb69';
+					} else {
+						document.getElementById("feedbackFiles").style.display = "none"; // Return back to normal
+						document.getElementById("input3").style.borderColor = '';
+					}
+				}
+			}
+			
+			function fileStructuration() { // This function runs when a user enters in all the files for the dataset
+				var files = document.getElementById("input3").value; // Gets user input on file formats
+				var fixedFiles = fixFiles(files); // Runs the fixFiles function to organize the file names
+				var span = '';
+					
+				for (var i = 0; i < fixedFiles.length; i++){ // For loops runs through all the files listed and outputs inputs for users to describe the structuration for each file format
+					span += '<span id="file' + i + '" class="input-group-adddon"><strong>';
+					span += fixedFiles[i] + ': ' + '</strong></span><input id="structure' + i + '" class="form-control">';	
+				}
+					
+				return span; 
+
+			}
+			
+			document.getElementById('numberDatasets').onchange = function (e) { // This runs after a user selects how many datasets exist
+				var number = document.getElementById('numberDatasets').value; // Gets the number of datasets
+				var datasetInput = '';
+				
+				for (var i = 0; i < number; i++){ // For each dataset create two inputs: (1) input for the dataset's name and (2) input for the dataset's link
+					datasetInput += '<br/>';
+					datasetInput += '<br/>';
+					datasetInput += '<div class="toTheLeft">';
+					datasetInput += '<label for="input2">Name of Dataset(s) </label>';
+					if (i == 0){ // For the first input, include help information for the dataset name
+						datasetInput += '    <a data-toggle="tooltip" title="Enter the name of the dataset" style="color: black; text-decoration:none;">';
+						datasetInput += '<i class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size: 17px; color: #0283b0"></i>'
+						datasetInput += '</a>';
+					}
+					datasetInput += '<input id="datasetName' + i + '" class="form-control" type="text" value=""/>';
+					datasetInput += '</div>';
+					datasetInput += '<div class="toTheRight">';
+					datasetInput += '<label for="input7">Source </label>';
+					if (i == 0){ // For the first input, include help information for the dataset source
+						datasetInput += '    <a data-toggle="tooltip" title="Please provide the link to the dataset" style="color: black; text-decoration:none;">';
+						datasetInput += '<i class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size: 17px; color: #0283b0"></i>'
+						datasetInput += '</a>';
+					}
+					datasetInput +=	'<input id="datasetSource' + i + '" class="form-control" type="text" value=""/>';
+					datasetInput += '</div>';
+				}
+				
+				document.getElementById('addDataset').innerHTML = datasetInput;
+				document.getElementById('addDataset').style.display = "block";
+			}
+
+			$(document).ready(function(){	
+				
+				var submission = 0;
+				document.getElementById('submit').onclick = function (e) { // Records the number of submissions
+					submission += 1;	
+				}
+				
+				$("#addCityBody").submit(function(event){ // Will run after user clicks the 'submit' button
+					
+					var number = document.getElementById('numberDatasets').value;
+					var source,
+						setName,
+						storeSource = [];
+						storeName = [];
+						
+					for (var i = 0; i < number; i++){ // This for loop runs through all inputted dataset names and sources and embeds them into <a> tags and then stores them all into one array that gets stored into the Source column of the Google Sheet
+						source = document.getElementById('datasetSource' + i).value;
+						setName = document.getElementById('datasetName' + i).value;
+						source = '<a href ="' + source + '" target="_blank">' + setName + '</a>';
+						storeSource.push(source); // Array with all <a> tags
+						storeName.push(setName); // Array with all the dataset names
+					}
+					
+					var embeddedSources = storeSource.join(" and "); // Separate all embedded links with an 'and'
+					document.getElementById('sourceValue').value = embeddedSources; // Stores this into the Google Sheet
+					
+					var names = storeName.join(" and "); // Separate all dataset names with an 'and'
+					document.getElementById('sourceName').value = names; // Stores this into the Google Sheet
+					
+					function endsWith(str, suffix) { // Function that checks what the last character of a string is. Is used to see if there is a period at the end of each file structuration
+						return str.indexOf(suffix, str.length - suffix.length) !== -1;
+					}
+					
+					var files = document.getElementById("input3").value; // Gets user input on file formats
+					var fixedFiles = fixFiles(files);
+					var input = '';
+					var period = '';
+					
+					for (var i = 0; i < fixedFiles.length; i++){ // For loops runs through all files listed for the dataste
+						if (document.getElementById('input3').value != ''){
+							console.log(document.getElementById("structure" + i).value.length);
+							period = endsWith(document.getElementById("structure" + i).value, '.'); // This checks to see if there is a period at the end of the structuration description for a single file
+							if (period == false) { // If there is not period
+								document.getElementById("structure" + i).value += '. '; // Add a period
+							}
+							input += $('#file' + i).text() + document.getElementById("structure" + i).value; // Stores the input as the file name and the structuration (e.g., XML: structuration description. Geo JavaScript Object Notation: strucuration description.)
+						}
+					}
+					
+					document.getElementById("structuration").value = input; // Stores the structuration so it will appear in the spreadsheet
+					
+					// The following function is called because it ensures that the input into the spreadsheet has the right format. File format names need to be a specific way so there is no confusion within index.html's fileFormats() function. For instance, XLSX will get confused with XLS, so XLSX needs to be stored as 'Excel Microsoft Office Open Extensible Markup Language Format Spreadsheet
+							
+					var files = document.getElementById("input3").value; // gets user input on file formats
+					document.getElementById("input3").value = fixFiles(files);
+					
+					document.getElementById('feedbackFiles').style.display = "none";
+					document.getElementById('feedbackDomain').style.display = "none";
+					document.getElementById('feedbackFailure').style.display = "none";
+					document.getElementById('feedbackSuccess').style.display = "none";
+					
+					//The following rest of code was copied from a Stackoverflow post: http://stackoverflow.com/questions/5004233/jquery-ajax-post-example-with-php/5004276#5004276 and then modified accordingly 
+					
+					// Variable to hold request
+					var request;
+					
+					if (request) {
+						request.abort();
+					}
+					
+					// setup some local variables
+					var $form = $(this);
+								
+					// Let's select and cache all the fields
+					var $inputs = $form.find("Domain, Municipality, Name, FileFormat, Structuration, Metadata, StandardLink, Source");
+
+					// Serialize the data in the form
+					var serializedData = $form.serialize();
+							
+					// Let's disable the inputs for the duration of the Ajax request.
+					// Note: we disable elements AFTER the form data has been serialized.
+					// Disabled form elements will not be serialized.
+					$inputs.prop("disabled", true);
+								
+					var allDomains = "Business Permits, Business Listing, Crime Statistic, Annual Budget, Expenditure, Procurement Contracts, Election Results, Campaign Finance Contributions, Lobbyist Activity, Food Safety, Zoning, Building Permits, Service Requests, Rezoning Permit Applications, Real-Time Transit, Transport Schedules, Public Facilities, Traffic Accidents, Road Construction, Natural Resources, Address Points".split(',')
+					var domain = document.getElementById("input0").value;
+					
+					if (allDomains.indexOf(domain) == -1){ // If the domain the user inputted does not exist in allDomains array
+						document.getElementById('feedbackDomain').style.display = "block"; // Give a warning
+						document.getElementById('input0').style.borderColor = '#ff6666';
+						event.preventDefault(); // Prevent page from refreshing 
+					} else { // Else fire off the request to the Feedback Google spreadsheet
+						document.getElementById('input0').style.borderColor = '';
+						request = $.ajax({
+							url: "https://script.google.com/macros/s/AKfycbxIkJP-qusQiy1AgmdSSF_VGdEw_ED_VdRnumi5DmIkr5ShxIQ/exec",
+							type: "post",
+							data: serializedData
+						});
+						
+						// Callback handler that will be called on success
+						request.done(function (response, textStatus, jqXHR){
+							// Log a message to the console
+							document.getElementById('feedbackSuccess').style.display = "block";
+							console.log("Hooray, it worked!");
+						});
+							
+						// Callback handler that will be called on failure
+						request.fail(function (jqXHR, textStatus, errorThrown){
+							// Log the error to the console
+							console.error(
+								"The following error occurred: "+
+								textStatus, errorThrown
+							);
+						});
+
+						// Callback handler that will be called regardless if the request failed or succeeded
+						request.always(function () {
+							// Reenable the inputs
+							$inputs.prop("disabled", false);
+						});
+
+						// Prevent default posting of form
+						event.preventDefault();
+					}
+				});
+			});
+		</script>
+	</body>
+</html>
