@@ -60,7 +60,7 @@
 		.interpolate(d3.interpolateHcl);
 
 	var pack = d3.layout.pack()
-		.padding(5)
+		.padding(15)
 		.size([1000, 700])
 		.value(function(d) { return d.size; })
 
@@ -85,7 +85,7 @@
 				.attr("class", function(d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
 				.style("fill", function(d) { return d.children ? color(d.depth) : null; }) // Change null to something else... metric?
 				.on("click", function(d) { if (focus !== d || (focus !== "text")) zoom(d), d3.event.stopPropagation(); });
-
+			
 		var text = svg.selectAll("text")
 			.data(nodes)
 			.enter().append("text")
@@ -131,7 +131,7 @@
 			.on("click", function() { zoom(root); });
 
 		zoomTo([root.x, root.y, root.r * 2 + margin]);
-
+		
 		function zoom(d) {
 			var focus0 = focus; focus = d;
 
@@ -169,32 +169,32 @@
 	 
 		// Copied the following code from: http://bl.ocks.org/mbostock/7555321
 	
-		wrap(text2, 75) // Breaks the texts for the domain titles
+		wrap(text2, 85) // Breaks the texts for the domain titles
 		wrap(text3, 150) // Breaks the text for the clickable standard titles
 		wrap(text, 200) // Breaks the text for the standard titles
 	  
 		function wrap(text, width) {
 			text.each(function() {
-				var text = d3.select(this),
-					words = text.text().split(/\s+/).reverse(),
-					word,
-					line = [],
-					lineNumber = 0,
-					lineHeight = 1.1, // ems
-					y = text.attr("y"),
-					dy = parseFloat(text.attr("dy")),
-					tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
-				while (word = words.pop()) {
-					line.push(word);
-					tspan.text(line.join(" "));
-					if (tspan.node().getComputedTextLength() > width) {
-						line.pop();
-						tspan.text(line.join(" "));
-						line = [word];
-						tspan = text.append("tspan").attr("x", 0).attr("y", 10).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word); // Code was not working, so instead of having "y" set to y, it was set to 10
-					}
-				}
-			});
+			var text = d3.select(this),
+				words = text.text().split(/\s+/).reverse(),
+				word,
+				line = [],
+				lineNumber = 0,
+				lineHeight = 1.1, // ems
+				y = text.attr("y"),
+				dy = parseFloat(text.attr("dy")),
+				tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+			while (word = words.pop()) {
+			  line.push(word);
+			  tspan.text(line.join(" "));
+			  if (tspan.node().getComputedTextLength() > width) {
+				line.pop();
+				tspan.text(line.join(" "));
+				line = [word];
+				tspan = text.append("tspan").attr("x", 0).attr("y", 12).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+			  }
+			}
+		  });
 		}  
 	});
 </script>
